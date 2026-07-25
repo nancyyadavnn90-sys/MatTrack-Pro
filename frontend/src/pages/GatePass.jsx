@@ -133,9 +133,9 @@ export default function GatePass() {
 
   const getStatusBadge = (status) => {
     const styles = {
-      'Open': 'bg-blue-100 text-blue-700',
-      'GRN Created': 'bg-green-100 text-green-700',
-      'Closed': 'bg-gray-100 text-gray-600',
+      'Open': 'bg-red-500/10 text-red-400 border border-red-500/30',
+      'GRN Created': 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/30',
+      'Closed': 'bg-slate-500/10 text-slate-400 border border-slate-500/30',
     };
     const icons = {
       'Open': <Clock className="w-3 h-3" />,
@@ -143,139 +143,134 @@ export default function GatePass() {
       'Closed': <XCircle className="w-3 h-3" />,
     };
     return (
-      <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${styles[status] || 'bg-gray-100 text-gray-600'}`}>
+      <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase ${styles[status] || 'bg-slate-800 text-slate-400'}`}>
         {icons[status]} {status}
       </span>
     );
   };
 
   return (
-    <div>
+    <div className="bg-[#121212] text-slate-200 min-h-screen p-6 font-sans space-y-6">
       {/* Related quick-actions bar */}
-      <div className="flex items-center gap-2 mb-4 flex-wrap">
-        <span className="text-slate-400 text-xs font-medium">RELATED</span>
-        <button className="flex items-center gap-1 bg-green-50 text-green-700 border border-green-200 px-3 py-1.5 rounded-lg text-xs font-medium hover:bg-green-100 transition">
+      <div className="flex items-center gap-2 flex-wrap">
+        <span className="text-slate-400 text-xs font-black uppercase">RELATED</span>
+        <button className="flex items-center gap-1 bg-[#1e1e1e] text-emerald-400 border border-emerald-500/30 px-3 py-1 rounded-lg text-xs font-bold hover:bg-[#252525]">
           📦 GRN
         </button>
         <button
           onClick={() => setShowForm(true)}
-          className="flex items-center gap-1 bg-orange-50 text-orange-700 border border-orange-200 px-3 py-1.5 rounded-lg text-xs font-medium hover:bg-orange-100 transition"
+          className="flex items-center gap-1 bg-amber-500/10 text-amber-400 border border-amber-500/30 px-3 py-1 rounded-lg text-xs font-bold hover:bg-amber-500/20"
         >
           <Plus className="w-3 h-3" /> New GRN
         </button>
-        <button className="flex items-center gap-1 bg-blue-50 text-blue-700 border border-blue-200 px-3 py-1.5 rounded-lg text-xs font-medium hover:bg-blue-100 transition">
+        <button className="flex items-center gap-1 bg-[#1e1e1e] text-blue-400 border border-blue-500/30 px-3 py-1 rounded-lg text-xs font-bold hover:bg-[#252525]">
           🚚 Dispatch
         </button>
-        <button className="flex items-center gap-1 bg-cyan-50 text-cyan-700 border border-cyan-200 px-3 py-1.5 rounded-lg text-xs font-medium hover:bg-cyan-100 transition">
+        <button className="flex items-center gap-1 bg-[#1e1e1e] text-purple-400 border border-purple-500/30 px-3 py-1 rounded-lg text-xs font-bold hover:bg-[#252525]">
           ✅ Quality
         </button>
       </div>
 
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex items-center justify-between border-b border-[#2a2a2a] pb-4">
         <div>
-          <h1 className="text-2xl font-bold text-slate-800">Gate Passes</h1>
-          <p className="text-slate-500 text-sm mt-1">
+          <h1 className="text-lg font-black text-white">Gate Passes</h1>
+          <p className="text-xs text-slate-400 font-medium">
             Manage inward and outward gate passes
           </p>
         </div>
         <button
           onClick={() => setShowForm(true)}
-          className="flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg font-medium transition"
+          className="flex items-center gap-2 bg-[#10b981] hover:bg-[#059669] text-white px-4 py-2 rounded-xl text-xs font-black shadow-lg shadow-emerald-500/10 transition"
         >
           <Plus className="w-4 h-4" /> New
         </button>
       </div>
 
       {/* Filters */}
-      <div className="bg-white rounded-xl border border-slate-200 p-4 mb-5">
-        <div className="grid grid-cols-2 gap-4 mb-4">
+      <div className="bg-[#1e1e1e] rounded-xl border border-[#2a2a2a] p-4 shadow-md space-y-3">
+        <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs text-slate-500 mb-1">From</label>
+            <label className="block text-[11px] text-slate-400 mb-1 font-semibold">From Date</label>
             <input
               type="date"
               value={filters.from_date}
               onChange={e => setFilters({ ...filters, from_date: e.target.value })}
-              className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+              className="w-full bg-[#121212] border border-[#333] rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500 font-medium"
             />
           </div>
           <div>
-            <label className="block text-xs text-slate-500 mb-1">To</label>
+            <label className="block text-[11px] text-slate-400 mb-1 font-semibold">To Date</label>
             <input
               type="date"
               value={filters.to_date}
               onChange={e => setFilters({ ...filters, to_date: e.target.value })}
-              className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+              className="w-full bg-[#121212] border border-[#333] rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500 font-medium"
             />
           </div>
         </div>
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs text-slate-500 mb-1">Status</label>
+            <label className="block text-[11px] text-slate-400 mb-1 font-semibold">Status</label>
             <select
               value={filters.status}
               onChange={e => setFilters({ ...filters, status: e.target.value })}
-              className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+              className="w-full bg-[#121212] border border-[#333] rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500 font-bold"
             >
               <option>All</option>
               <option>Open</option>
               <option>GRN Created</option>
               <option>Closed</option>
-              <option>Cancelled</option>
             </select>
           </div>
           <div>
-            <label className="block text-xs text-slate-500 mb-1">Search</label>
+            <label className="block text-[11px] text-slate-400 mb-1 font-semibold">Search</label>
             <input
               type="text"
+              placeholder="GP no / supplier / vehicle..."
               value={filters.search}
               onChange={e => setFilters({ ...filters, search: e.target.value })}
-              placeholder="GP no / supplier / vehicle..."
-              className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+              className="w-full bg-[#121212] border border-[#333] rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500 font-medium"
             />
           </div>
         </div>
       </div>
 
-      {/* Stats */}
-      <div className="grid grid-cols-3 gap-4 mb-6">
-        <div className="bg-white rounded-xl border border-slate-200 p-4">
-          <p className="text-slate-500 text-sm">Total Gate Passes</p>
-          <p className="text-2xl font-bold text-slate-800 mt-1">{gatePasses.length}</p>
+      {/* KPI Cards */}
+      <div className="grid grid-cols-3 gap-4">
+        <div className="bg-[#1e1e1e] rounded-xl border border-[#2a2a2a] p-4 shadow-md space-y-1">
+          <p className="text-[10px] font-black uppercase text-slate-400">Total Gate Passes</p>
+          <p className="text-2xl font-black text-white">{filteredGPs.length}</p>
         </div>
-        <div className="bg-white rounded-xl border border-slate-200 p-4">
-          <p className="text-slate-500 text-sm">Open</p>
-          <p className="text-2xl font-bold text-blue-600 mt-1">
-            {gatePasses.filter(gp => gp.status === 'Open').length}
+        <div className="bg-[#1e1e1e] rounded-xl border border-[#2a2a2a] p-4 shadow-md space-y-1">
+          <p className="text-[10px] font-black uppercase text-slate-400">Open</p>
+          <p className="text-2xl font-black text-red-400">
+            {filteredGPs.filter(gp => gp.status === 'Open').length}
           </p>
         </div>
-        <div className="bg-white rounded-xl border border-slate-200 p-4">
-          <p className="text-slate-500 text-sm">GRN Created</p>
-          <p className="text-2xl font-bold text-green-600 mt-1">
-            {gatePasses.filter(gp => gp.status === 'GRN Created').length}
+        <div className="bg-[#1e1e1e] rounded-xl border border-[#2a2a2a] p-4 shadow-md space-y-1">
+          <p className="text-[10px] font-black uppercase text-slate-400">GRN Created</p>
+          <p className="text-2xl font-black text-emerald-400">
+            {filteredGPs.filter(gp => gp.status === 'GRN Created').length}
           </p>
         </div>
       </div>
 
       {/* Table */}
-      <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
-        <div className="px-6 py-4 border-b border-slate-200">
-          <h2 className="font-semibold text-slate-800">All Gate Passes ({filteredGPs.length})</h2>
+      <div className="bg-[#1e1e1e] rounded-xl border border-[#2a2a2a] overflow-hidden shadow-lg">
+        <div className="px-4 py-3 border-b border-[#2a2a2a]">
+          <h2 className="text-xs font-black uppercase text-white tracking-wider">All Gate Passes ({filteredGPs.length})</h2>
         </div>
         <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead className="bg-slate-50">
+          <table className="w-full text-left text-xs font-semibold text-slate-200">
+            <thead className="bg-[#252525] border-b border-[#333]">
               <tr>
-                <th className="text-left px-6 py-3 text-xs font-medium text-slate-500 uppercase">GP Number</th>
-                <th className="text-left px-6 py-3 text-xs font-medium text-slate-500 uppercase">Date</th>
-                <th className="text-left px-6 py-3 text-xs font-medium text-slate-500 uppercase">Type</th>
-                <th className="text-left px-6 py-3 text-xs font-medium text-slate-500 uppercase">Supplier</th>
-                <th className="text-left px-6 py-3 text-xs font-medium text-slate-500 uppercase">Vehicle No</th>
-                <th className="text-left px-6 py-3 text-xs font-medium text-slate-500 uppercase">Status</th>
-                <th className="text-left px-6 py-3 text-xs font-medium text-slate-500 uppercase">Action</th>
+                {['GP NUMBER', 'DATE', 'TYPE', 'SUPPLIER', 'VEHICLE NO', 'STATUS', ''].map(h => (
+                  <th key={h} className="text-left px-6 py-3 text-xs font-black text-slate-200 uppercase tracking-wider">{h}</th>
+                ))}
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-[#2a2a2a]">
               {filteredGPs.length === 0 ? (
                 <tr>
                   <td colSpan="7" className="text-center py-12 text-slate-400">
@@ -284,7 +279,7 @@ export default function GatePass() {
                 </tr>
               ) : (
                 filteredGPs.map(gp => (
-                  <tr key={gp.gp_id} className="hover:bg-slate-50 transition cursor-pointer" onClick={async () => {
+                  <tr key={gp.gp_id} className="hover:bg-[#252525] border-b border-[#2a2a2a] transition cursor-pointer" onClick={async () => {
                     try {
                       const res = await axios.get(`${API}/gate-passes/${gp.gp_id}`, getAuthHeader());
                       setGpDetail(res.data);
@@ -292,24 +287,20 @@ export default function GatePass() {
                       setGpDetail(gp);
                     }
                   }}>
-                    <td className="px-6 py-4 font-medium text-orange-600">{gp.gp_number}</td>
-                    <td className="px-6 py-4 text-slate-500 text-sm">
-                      {new Date(gp.created_at).toLocaleDateString('en-IN')}
+                    <td className="px-6 py-3 font-extrabold text-emerald-400 text-xs">{gp.gp_number}</td>
+                    <td className="px-6 py-3 text-slate-300 font-mono text-xs">
+                      {new Date(gp.created_at || gp.gp_date).toLocaleDateString('en-IN')}
                     </td>
-                    <td className="px-6 py-4">
-                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                        gp.gp_type === 'Inward'
-                          ? 'bg-purple-100 text-purple-700'
-                          : 'bg-amber-100 text-amber-700'
-                      }`}>
+                    <td className="px-6 py-3">
+                      <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase bg-[#121212] border border-[#3a3a3a] text-purple-400">
                         {gp.gp_type}
                       </span>
                     </td>
-                    <td className="px-6 py-4 text-slate-600">{gp.supplier_name || '-'}</td>
-                    <td className="px-6 py-4 text-slate-600">{gp.vehicle_number || '-'}</td>
-                    <td className="px-6 py-4">{getStatusBadge(gp.status)}</td>
-                    <td className="px-6 py-4">
-                      <Eye className="w-4 h-4 text-slate-400" />
+                    <td className="px-6 py-3 text-white font-extrabold text-xs">{gp.supplier_name || '-'}</td>
+                    <td className="px-6 py-3 text-slate-300 font-mono text-xs">{gp.vehicle_number || '-'}</td>
+                    <td className="px-6 py-3">{getStatusBadge(gp.status)}</td>
+                    <td className="px-6 py-3">
+                      <Eye className="w-4 h-4 text-emerald-400" />
                     </td>
                   </tr>
                 ))

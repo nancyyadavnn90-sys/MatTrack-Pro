@@ -980,27 +980,27 @@ export default function GRN() {
 
   // ─── LIST VIEW ───────────────────────────────────────────────
   return (
-    <div>
-      <div className="flex items-center justify-between mb-6">
+    <div className="bg-[#121212] text-slate-200 min-h-screen p-6 font-sans space-y-6">
+      <div className="flex items-center justify-between border-b border-[#2a2a2a] pb-4">
         <div>
-          <h1 className="text-2xl font-bold text-slate-800">Goods Receipt Notes</h1>
-          <p className="text-slate-500 text-sm mt-1">Manage all incoming material receipts</p>
+          <h1 className="text-lg font-black text-white">Goods Receipt Notes</h1>
+          <p className="text-xs text-slate-400 font-medium">Manage all incoming material receipts</p>
         </div>
         <button
           onClick={() => setView('new')}
-          className="flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg font-medium transition"
+          className="flex items-center gap-2 bg-[#10b981] hover:bg-[#059669] text-white px-4 py-2 rounded-xl text-xs font-black shadow-lg shadow-emerald-500/10 transition"
         >
           <Plus className="w-4 h-4" /> New GRN
         </button>
       </div>
 
-      <div className="bg-white rounded-xl border border-slate-200 p-4 mb-5">
+      <div className="bg-[#1e1e1e] rounded-xl border border-[#2a2a2a] p-4 shadow-md space-y-3">
         <div className="grid grid-cols-4 gap-4">
           <div>
-            <label className="block text-xs text-slate-500 mb-1">Status</label>
+            <label className="block text-[11px] text-slate-400 mb-1 font-semibold">Status</label>
             <select value={filters.status}
               onChange={e => setFilters({ ...filters, status: e.target.value })}
-              className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none">
+              className="w-full bg-[#121212] border border-[#333] rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500 font-bold">
               <option value="">All Statuses</option>
               <option>Draft</option>
               <option>Submitted</option>
@@ -1009,53 +1009,53 @@ export default function GRN() {
             </select>
           </div>
           <div>
-            <label className="block text-xs text-slate-500 mb-1">From Date</label>
+            <label className="block text-[11px] text-slate-400 mb-1 font-semibold">From Date</label>
             <input type="date" value={filters.from_date}
               onChange={e => setFilters({ ...filters, from_date: e.target.value })}
-              className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none" />
+              className="w-full bg-[#121212] border border-[#333] rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500 font-medium" />
           </div>
           <div>
-            <label className="block text-xs text-slate-500 mb-1">To Date</label>
+            <label className="block text-[11px] text-slate-400 mb-1 font-semibold">To Date</label>
             <input type="date" value={filters.to_date}
               onChange={e => setFilters({ ...filters, to_date: e.target.value })}
-              className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none" />
+              className="w-full bg-[#121212] border border-[#333] rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500 font-medium" />
           </div>
           <div>
-            <label className="block text-xs text-slate-500 mb-1">Supplier</label>
+            <label className="block text-[11px] text-slate-400 mb-1 font-semibold">Supplier</label>
             <input type="text" value={filters.supplier}
               onChange={e => setFilters({ ...filters, supplier: e.target.value })}
               placeholder="Supplier name..."
-              className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none" />
+              className="w-full bg-[#121212] border border-[#333] rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500 font-medium" />
           </div>
         </div>
-        <div className="flex gap-2 mt-3">
+        <div className="flex gap-2 pt-1">
           <button onClick={applyFilters}
-            className="flex items-center gap-1 bg-orange-500 text-white px-4 py-1.5 rounded-lg text-sm hover:bg-orange-600 transition">
-            <Filter className="w-3 h-3" /> Filter
+            className="flex items-center gap-1 bg-emerald-500 text-white px-4 py-1.5 rounded-lg text-xs font-bold hover:bg-emerald-600 transition">
+            <Filter className="w-3.5 h-3.5" /> Filter
           </button>
           <button onClick={clearFilters}
-            className="border border-slate-300 text-slate-600 px-4 py-1.5 rounded-lg text-sm hover:bg-slate-50 transition">
+            className="border border-[#333] text-slate-400 px-4 py-1.5 rounded-lg text-xs font-bold hover:bg-[#252525] transition">
             ✕ Clear
           </button>
         </div>
       </div>
 
-      <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
-        <div className="px-6 py-3 border-b border-slate-200 bg-slate-50">
-          <span className="text-sm font-medium text-slate-600">
+      <div className="bg-[#1e1e1e] rounded-xl border border-[#2a2a2a] overflow-hidden shadow-lg">
+        <div className="px-4 py-3 border-b border-[#2a2a2a]">
+          <h2 className="text-xs font-black uppercase text-white tracking-wider">
             Existing GRNs ({filteredGRNs.length})
-          </span>
+          </h2>
         </div>
         <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead className="bg-slate-50 border-b border-slate-200">
+          <table className="w-full text-left text-xs font-semibold text-slate-200">
+            <thead className="bg-[#252525] border-b border-[#333]">
               <tr>
                 {['GRN NO', 'DATE', 'SUPPLIER', 'STORE', 'INVOICE', 'STATUS', ''].map(h => (
-                  <th key={h} className="text-left px-6 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">{h}</th>
+                  <th key={h} className="text-left px-6 py-3 text-xs font-black text-slate-200 uppercase tracking-wider">{h}</th>
                 ))}
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-[#2a2a2a]">
               {filteredGRNs.length === 0 ? (
                 <tr>
                   <td colSpan="7" className="text-center py-12 text-slate-400">No GRNs found.</td>
@@ -1063,7 +1063,7 @@ export default function GRN() {
               ) : (
                 filteredGRNs.map(grn => (
                   <tr key={grn.grn_id}
-                    className="hover:bg-slate-50 transition cursor-pointer"
+                    className="hover:bg-[#252525] border-b border-[#2a2a2a] transition cursor-pointer"
                     onClick={async () => {
                       try {
                         const res = await axios.get(`${API}/grn/${grn.grn_id}`, getAuthHeader());
@@ -1074,15 +1074,15 @@ export default function GRN() {
                         setPrintType(null);
                       }
                     }}>
-                    <td className="px-6 py-3 font-semibold text-orange-600 text-sm">{grn.grn_number}</td>
-                    <td className="px-6 py-3 text-slate-600 text-sm">
+                    <td className="px-6 py-3 font-extrabold text-emerald-400 text-xs">{grn.grn_number}</td>
+                    <td className="px-6 py-3 text-slate-300 font-mono text-xs">
                       {new Date(grn.grn_date).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: '2-digit' })}
                     </td>
-                    <td className="px-6 py-3 text-slate-700 text-sm">{grn.supplier_name}</td>
-                    <td className="px-6 py-3 text-slate-600 text-sm">{grn.store_name}</td>
-                    <td className="px-6 py-3 text-slate-600 text-sm">{grn.invoice_number || '-'}</td>
+                    <td className="px-6 py-3 text-white font-extrabold text-xs">{grn.supplier_name}</td>
+                    <td className="px-6 py-3 text-slate-300 text-xs font-medium">{grn.store_name}</td>
+                    <td className="px-6 py-3 text-slate-300 text-xs font-medium">{grn.invoice_number || '-'}</td>
                     <td className="px-6 py-3">{getStatusBadge(grn.status)}</td>
-                    <td className="px-6 py-3"><Eye className="w-4 h-4 text-slate-400" /></td>
+                    <td className="px-6 py-3"><Eye className="w-4 h-4 text-emerald-400" /></td>
                   </tr>
                 ))
               )}

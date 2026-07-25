@@ -470,7 +470,7 @@ export default function FinalQC() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="bg-[#121212] text-slate-200 min-h-screen p-6 font-sans space-y-6">
       
       {/* ──────────────────────────────────────────────────────── */}
       {/* 1. VIEW STATE: FINAL QC LIST PAGE */}
@@ -478,12 +478,12 @@ export default function FinalQC() {
       {activeView === 'list' && (
         <>
           {/* Top Bar */}
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#2a2a2a] pb-4">
             <div>
-              <h1 className="text-2xl font-black text-slate-800 tracking-tight flex items-center gap-2">
-                <ShieldCheck className="w-8 h-8 text-orange-500" /> Final QC Inspections
+              <h1 className="text-lg font-black text-white tracking-wide flex items-center gap-2">
+                <ShieldCheck className="w-6 h-6 text-emerald-400" /> Final QC Inspections
               </h1>
-              <p className="text-slate-500 text-sm mt-0.5">
+              <p className="text-slate-400 text-xs font-medium mt-0.5">
                 Final quality check before FG store
               </p>
             </div>
@@ -493,7 +493,7 @@ export default function FinalQC() {
                 handleResetWizard();
                 setViewState('inspect-form');
               }}
-              className="flex items-center gap-1.5 bg-orange-500 text-white px-5 py-2.5 rounded-lg text-xs font-bold hover:bg-orange-600 transition shadow-sm self-start md:self-auto"
+              className="flex items-center gap-1.5 bg-emerald-600 text-white px-5 py-2.5 rounded-lg text-xs font-bold hover:bg-emerald-700 transition shadow-sm self-start md:self-auto"
             >
               <Plus className="w-4 h-4" /> New Final QC
             </button>
@@ -501,124 +501,121 @@ export default function FinalQC() {
 
           {/* 4 Stats Cards */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
+            <div className="bg-[#1e1e1e] p-4 rounded-xl border border-[#2a2a2a] shadow-md flex items-center justify-between">
               <div>
-                <p className="text-slate-400 text-xxs font-bold uppercase tracking-wider">Total Inspections</p>
-                <p className="text-2xl font-black text-slate-800 mt-1">{stats.total_checked}</p>
+                <p className="text-slate-400 text-[10px] font-black uppercase tracking-wider">Total Inspections</p>
+                <p className="text-2xl font-black text-white mt-1">{stats.total_checked}</p>
               </div>
-              <div className="w-10 h-10 rounded-full bg-slate-50 border border-slate-150 flex items-center justify-center text-lg text-slate-655 shadow-inner">📋</div>
+              <div className="w-10 h-10 rounded-xl bg-[#121212] border border-[#2a2a2a] flex items-center justify-center text-lg text-slate-300">📋</div>
             </div>
 
-            <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
+            <div className="bg-[#1e1e1e] p-4 rounded-xl border border-[#2a2a2a] shadow-md flex items-center justify-between">
               <div>
-                <p className="text-slate-400 text-xxs font-bold uppercase tracking-wider">Approved</p>
-                <p className="text-2xl font-black text-green-600 mt-1">{stats.approved_count}</p>
+                <p className="text-slate-400 text-[10px] font-black uppercase tracking-wider">Approved</p>
+                <p className="text-2xl font-black text-emerald-400 mt-1">{stats.approved_count}</p>
               </div>
-              <div className="w-10 h-10 rounded-full bg-green-50 border border-green-100 flex items-center justify-center text-lg text-green-600 shadow-inner">✅</div>
+              <div className="w-10 h-10 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-lg text-emerald-400">✅</div>
             </div>
 
-            <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
+            <div className="bg-[#1e1e1e] p-4 rounded-xl border border-[#2a2a2a] shadow-md flex items-center justify-between">
               <div>
-                <p className="text-slate-400 text-xxs font-bold uppercase tracking-wider">Rejected</p>
-                <p className="text-2xl font-black text-red-500 mt-1">{stats.rejected_count}</p>
+                <p className="text-slate-400 text-[10px] font-black uppercase tracking-wider">Rejected</p>
+                <p className="text-2xl font-black text-red-400 mt-1">{stats.rejected_count}</p>
               </div>
-              <div className="w-10 h-10 rounded-full bg-red-50 border border-red-100 flex items-center justify-center text-lg text-red-500 shadow-inner">❌</div>
+              <div className="w-10 h-10 rounded-full bg-red-500/10 border border-red-500/30 flex items-center justify-center text-lg text-red-400">❌</div>
             </div>
 
-            <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
+            <div className="bg-[#1e1e1e] p-4 rounded-xl border border-[#2a2a2a] shadow-md flex items-center justify-between">
               <div>
-                <p className="text-slate-400 text-xxs font-bold uppercase tracking-wider">On Hold</p>
-                <p className="text-2xl font-black text-amber-500 mt-1">{stats.hold_count}</p>
+                <p className="text-slate-400 text-[10px] font-black uppercase tracking-wider">On Hold</p>
+                <p className="text-2xl font-black text-amber-400 mt-1">{stats.hold_count}</p>
               </div>
-              <div className="w-10 h-10 rounded-full bg-amber-50 border border-amber-100 flex items-center justify-center text-lg text-amber-500 shadow-inner">⏸️</div>
+              <div className="w-10 h-10 rounded-full bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-lg text-amber-400">⏸️</div>
             </div>
           </div>
 
           {/* Table Container */}
-          <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+          <div className="bg-[#1e1e1e] rounded-xl border border-[#2a2a2a] shadow-lg overflow-hidden space-y-3 p-4">
             
             {/* Tabs Selector */}
-            <div className="flex border-b border-slate-200 bg-slate-50/50">
-              <button
-                onClick={() => setActiveTab('pending')}
-                className={`py-3.5 px-6 text-xs font-bold border-b-2 transition flex items-center gap-2 ${
-                  activeTab === 'pending'
-                    ? 'border-orange-500 text-orange-600'
-                    : 'border-transparent text-slate-500 hover:text-slate-700'
-                }`}
-              >
-                Pending FQC
-                <span className={`px-2 py-0.5 rounded-full text-[10px] font-black ${
-                  activeTab === 'pending' ? 'bg-orange-100 text-orange-655' : 'bg-slate-200 text-slate-500'
-                }`}>
-                  {pendingWOs.length}
-                </span>
-              </button>
-              <button
-                onClick={() => setActiveTab('history')}
-                className={`py-3.5 px-6 text-xs font-bold border-b-2 transition flex items-center gap-2 ${
-                  activeTab === 'history'
-                    ? 'border-orange-500 text-orange-600'
-                    : 'border-transparent text-slate-500 hover:text-slate-700'
-                }`}
-              >
-                Inspection History
-                <span className={`px-2 py-0.5 rounded-full text-[10px] font-black ${
-                  activeTab === 'history' ? 'bg-orange-100 text-orange-655' : 'bg-slate-200 text-slate-500'
-                }`}>
-                  {inspections.length}
-                </span>
-              </button>
-            </div>
+            <div className="flex justify-between items-center border-b border-[#2a2a2a] pb-3 flex-wrap gap-2">
+              <div className="flex bg-[#121212] p-1 rounded-xl border border-[#2a2a2a]">
+                <button
+                  onClick={() => setActiveTab('pending')}
+                  className={`py-1.5 px-4 text-xs font-bold rounded-lg transition flex items-center gap-2 ${
+                    activeTab === 'pending'
+                      ? 'bg-[#10b981] text-white shadow-md'
+                      : 'text-slate-400 hover:text-white'
+                  }`}
+                >
+                  Pending FQC
+                  <span className="px-2 py-0.5 rounded-full text-[10px] font-black bg-emerald-950 text-emerald-400 border border-emerald-500/30">
+                    {pendingWOs.length}
+                  </span>
+                </button>
+                <button
+                  onClick={() => setActiveTab('history')}
+                  className={`py-1.5 px-4 text-xs font-bold rounded-lg transition flex items-center gap-2 ${
+                    activeTab === 'history'
+                      ? 'bg-[#10b981] text-white shadow-md'
+                      : 'text-slate-400 hover:text-white'
+                  }`}
+                >
+                  Inspection History
+                  <span className="px-2 py-0.5 rounded-full text-[10px] font-black bg-[#252525] text-slate-300">
+                    {inspections.length}
+                  </span>
+                </button>
+              </div>
 
-            <div className="p-4 border-b border-slate-100 bg-white flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-              <span className="text-slate-800 font-bold text-sm">
-                {activeTab === 'pending' ? 'Work Orders Awaiting Final QC' : 'QC Inspection Registry'}
-              </span>
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2" />
                 <input
                   type="text"
                   placeholder={activeTab === 'pending' ? "Search pending WOs..." : "Search inspections..."}
                   value={filterText}
                   onChange={(e) => setFilterText(e.target.value)}
-                  className="pl-9 pr-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs w-64 focus:outline-none focus:ring-1 focus:ring-orange-500"
+                  className="pl-9 pr-3 py-1.5 bg-[#121212] border border-[#3a3a3a] rounded-xl text-xs w-64 text-white focus:outline-none focus:border-emerald-500 font-medium"
                 />
               </div>
             </div>
 
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto border border-[#2a2a2a] rounded-xl">
               {activeTab === 'pending' ? (
                 <table className="w-full text-left border-collapse">
                   <thead>
-                    <tr className="border-b border-slate-100 text-slate-450 text-xxs font-bold uppercase tracking-wider bg-slate-50/50">
+                    <tr className="border-b border-[#333] text-slate-200 text-xs font-black uppercase tracking-wider bg-[#252525]">
                       <th className="py-3 px-4">Work Order</th>
                       <th className="py-3 px-4">Product Part</th>
                       <th className="py-3 px-4">Customer</th>
                       <th className="py-3 px-4 text-right">Planned Qty</th>
-                      <th className="py-3 px-4 text-right text-orange-600">Produced (Moulding)</th>
-                      <th className="py-3 px-4 text-right text-green-700">QC Checked</th>
-                      <th className="py-3 px-4 text-right text-slate-700">Pending FQC</th>
+                      <th className="py-3 px-4 text-right text-amber-400">Produced (Moulding)</th>
+                      <th className="py-3 px-4 text-right text-emerald-400">QC Checked</th>
+                      <th className="py-3 px-4 text-right text-white">Pending FQC</th>
                       <th className="py-3 px-4 text-right">Action</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-100 text-xs">
+                  <tbody className="divide-y divide-[#2a2a2a] text-xs">
                     {pendingWOs
                       .filter(wo => !filterText || wo.wo_number.toLowerCase().includes(filterText.toLowerCase()) || wo.item_name.toLowerCase().includes(filterText.toLowerCase()) || (wo.customer_name && wo.customer_name.toLowerCase().includes(filterText.toLowerCase())))
                       .map(wo => (
-                        <tr key={wo.wo_id} className="hover:bg-slate-50/50 transition">
-                          <td className="py-3.5 px-4 font-bold text-slate-800">{wo.wo_number}</td>
-                          <td className="py-3.5 px-4 font-semibold text-slate-700">{wo.item_name}</td>
-                          <td className="py-3.5 px-4 text-slate-500">{wo.customer_name || 'N/A'}</td>
-                          <td className="py-3.5 px-4 text-right font-medium text-slate-550">{parseFloat(wo.planned_qty).toLocaleString()}</td>
-                          <td className="py-3.5 px-4 text-right font-black text-orange-600">{parseFloat(wo.produced_qty).toLocaleString()}</td>
-                          <td className="py-3.5 px-4 text-right font-bold text-green-700">{parseFloat(wo.inspected_qty).toLocaleString()}</td>
-                          <td className="py-3.5 px-4 text-right font-black text-slate-800 bg-orange-50/30">{parseFloat(wo.pending_qty).toLocaleString()} {wo.unit}</td>
+                        <tr key={wo.wo_id} className="hover:bg-[#252525] border-b border-[#2a2a2a] transition">
+                          <td className="py-3.5 px-4 font-black text-emerald-400">{wo.wo_number}</td>
+                          <td className="py-3.5 px-4 font-extrabold text-white">{wo.item_name}</td>
+                          <td className="py-3.5 px-4 font-bold text-slate-300">{wo.customer_name || 'N/A'}</td>
+                          <td className="py-3.5 px-4 text-right font-mono text-slate-300">{parseFloat(wo.planned_qty).toLocaleString()}</td>
+                          <td className="py-3.5 px-4 text-right font-black text-amber-400">{parseFloat(wo.produced_qty).toLocaleString()}</td>
+                          <td className="py-3.5 px-4 text-right font-black text-emerald-400">{parseFloat(wo.inspected_qty).toLocaleString()}</td>
+                          <td className="py-3.5 px-4 text-right font-black text-amber-300">
+                            <span className="bg-amber-500/10 px-2 py-1 rounded border border-amber-500/30">
+                              {parseFloat(wo.pending_qty).toLocaleString()} {wo.unit}
+                            </span>
+                          </td>
                           <td className="py-3.5 px-4 text-right">
                             <button
                               type="button"
                               onClick={() => handleStartInspectPending(wo)}
-                              className="px-3 py-1 bg-orange-500 hover:bg-orange-600 text-white font-bold text-xxs rounded transition shadow-xs"
+                              className="px-3.5 py-1.5 bg-[#10b981] hover:bg-[#059669] text-white font-black text-xs rounded-lg transition shadow-md"
                             >
                               Inspect
                             </button>

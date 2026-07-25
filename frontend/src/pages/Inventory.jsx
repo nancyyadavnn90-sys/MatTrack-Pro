@@ -436,36 +436,36 @@ export default function Inventory() {
         <span className="text-slate-400 text-xs font-medium uppercase tracking-wider">Related</span>
         <button
           onClick={() => window.location.href = '/gate-pass'}
-          className="flex items-center gap-1.5 bg-slate-50 text-slate-700 border border-slate-200 px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-slate-100 transition"
+          className="flex items-center gap-1.5 bg-[#1e1e1e] text-slate-300 border border-[#2a2a2a] px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-[#252525] transition"
         >
           🚚 Gate Pass
         </button>
         <button
           onClick={() => window.location.href = '/grn'}
-          className="flex items-center gap-1.5 bg-slate-50 text-slate-700 border border-slate-200 px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-slate-100 transition"
+          className="flex items-center gap-1.5 bg-[#1e1e1e] text-slate-300 border border-[#2a2a2a] px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-[#252525] transition"
         >
           📦 Goods Receipt Note
         </button>
         <button
-          className="flex items-center gap-1.5 bg-orange-50 text-orange-700 border border-orange-200 px-3 py-1.5 rounded-lg text-xs font-semibold transition"
+          className="flex items-center gap-1.5 bg-orange-900/20 text-orange-400 border border-orange-900/50 px-3 py-1.5 rounded-lg text-xs font-semibold transition"
         >
           🗃️ Stock Position
         </button>
       </div>
 
       {/* HEADER SECTION */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#2a2a2a] pb-4">
         <div>
-          <h1 className="text-2xl font-black text-slate-800 tracking-tight flex items-center gap-2">
-            <Layers className="w-7 h-7 text-orange-500" /> Stock / Inventory
+          <h1 className="text-lg font-black text-white tracking-wide flex items-center gap-2">
+            <Layers className="w-6 h-6 text-emerald-400" /> Stock / Inventory
           </h1>
-          <p className="text-slate-500 text-sm mt-0.5">
+          <p className="text-slate-400 text-xs font-medium mt-0.5">
             Manage store materials, bin locations, stock movements, and production issues.
           </p>
         </div>
 
         {/* SUB-TABS NAVIGATION */}
-        <div className="flex bg-white p-1 rounded-xl border border-slate-200 shadow-sm self-start overflow-x-auto max-w-full">
+        <div className="flex bg-[#1e1e1e] p-1 rounded-xl border border-[#2a2a2a] shadow-md self-start overflow-x-auto max-w-full">
           {[
             { id: 'put-away', label: 'Put-Away', icon: '📥' },
             { id: 'query', label: 'Query', icon: '🔍' },
@@ -478,10 +478,10 @@ export default function Inventory() {
             <button
               key={t.id}
               onClick={() => setActiveTab(t.id)}
-              className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-bold transition whitespace-nowrap ${
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition whitespace-nowrap ${
                 activeTab === t.id
-                  ? 'bg-orange-500 text-white shadow-sm'
-                  : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                  ? 'bg-[#10b981] text-white shadow-md'
+                  : 'text-slate-400 hover:bg-[#252525] hover:text-white'
               }`}
             >
               <span>{t.icon}</span>
@@ -492,17 +492,16 @@ export default function Inventory() {
       </div>
 
       {/* ─── TAB CONTENT: PUT-AWAY ─────────────────────────────────── */}
-      {/* ─── TAB CONTENT: PUT-AWAY ─────────────────────────────────── */}
       {activeTab === 'put-away' && (
         <div className="max-w-4xl mx-auto space-y-6">
           
           {/* BARCODE SCAN FIELD */}
-          <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
-            <label className="block text-sm font-bold text-slate-700 mb-2">Scan Label Barcode</label>
+          <div className="bg-[#1e1e1e] rounded-xl border border-[#2a2a2a] shadow-lg p-6">
+            <label className="block text-xs font-black uppercase text-white mb-2 tracking-wider">Scan Label Barcode</label>
             <div className="flex gap-2">
               <div className="relative flex-1">
                 <span className="absolute inset-y-0 left-0 pl-3 flex items-center">
-                  <Search className="w-5 h-5 text-slate-400" />
+                  <Search className="w-4 h-4 text-slate-400" />
                 </span>
                 <input
                   type="text"
@@ -510,18 +509,18 @@ export default function Inventory() {
                   value={putAwayScan}
                   onChange={e => setPutAwayScan(e.target.value)}
                   onKeyDown={e => e.key === 'Enter' && handlePutAwaySearch()}
-                  className="w-full pl-10 pr-10 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-orange-500 focus:bg-white focus:outline-none transition"
+                  className="w-full pl-9 pr-10 py-2.5 bg-[#121212] border border-[#3a3a3a] rounded-xl text-xs text-white placeholder-slate-400 focus:border-emerald-500 focus:outline-none font-medium transition"
                 />
                 <button
                   onClick={() => startScanner(handlePutAwaySearch)}
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-orange-500 transition"
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-emerald-400 transition"
                 >
                   <Camera className="w-5 h-5" />
                 </button>
               </div>
               <button
                 onClick={() => handlePutAwaySearch()}
-                className="bg-orange-500 hover:bg-orange-600 text-white font-semibold text-sm px-5 py-2.5 rounded-xl transition shadow-sm"
+                className="bg-[#10b981] hover:bg-[#059669] text-white font-black text-xs px-5 py-2.5 rounded-xl transition shadow-md"
               >
                 Load
               </button>
@@ -530,46 +529,46 @@ export default function Inventory() {
 
           {/* SCANNED LABEL CARD */}
           {putAwayLabel && (
-            <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-              <div className="bg-slate-900 px-6 py-4 flex items-center justify-between text-white">
+            <div className="bg-[#1e1e1e] rounded-xl border border-[#2a2a2a] shadow-lg overflow-hidden">
+              <div className="bg-[#121212] px-6 py-4 flex items-center justify-between text-white border-b border-[#2a2a2a]">
                 <div>
-                  <h3 className="font-extrabold text-base tracking-tight">{putAwayLabel.item_name}</h3>
+                  <h3 className="font-black text-sm tracking-wide text-white">{putAwayLabel.item_name}</h3>
                   <p className="text-slate-400 text-xs mt-0.5">
-                    Label: <span className="text-orange-400 font-bold">{putAwayLabel.label_number}</span> | Type: {putAwayLabel.label_type}
+                    Label: <span className="text-emerald-400 font-extrabold">{putAwayLabel.label_number}</span> | Type: {putAwayLabel.label_type}
                   </p>
                 </div>
                 {getStatusBadge(putAwayLabel.status)}
               </div>
 
               <div className="p-6">
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6 border-b border-slate-100 pb-5">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6 border-b border-[#2a2a2a] pb-5">
                   <div>
                     <p className="text-slate-400 text-xs font-semibold">Quantity</p>
-                    <p className="text-slate-800 font-bold text-sm mt-0.5">{putAwayLabel.quantity} {putAwayLabel.unit}</p>
+                    <p className="text-white font-black text-sm mt-0.5">{putAwayLabel.quantity} {putAwayLabel.unit}</p>
                   </div>
                   <div>
                     <p className="text-slate-400 text-xs font-semibold">Batch No</p>
-                    <p className="text-slate-800 font-bold text-sm mt-0.5">{putAwayLabel.batch_number || '-'}</p>
+                    <p className="text-white font-black text-sm mt-0.5">{putAwayLabel.batch_number || '-'}</p>
                   </div>
                   <div>
                     <p className="text-slate-400 text-xs font-semibold">Current Store</p>
-                    <p className="text-slate-800 font-bold text-sm mt-0.5">{putAwayLabel.store_name || '-'}</p>
+                    <p className="text-white font-black text-sm mt-0.5">{putAwayLabel.store_name || '-'}</p>
                   </div>
                   <div>
                     <p className="text-slate-400 text-xs font-semibold">Current Bin</p>
-                    <p className="text-slate-800 font-bold text-sm mt-0.5">{putAwayLabel.bin || 'Unassigned'}</p>
+                    <p className="text-white font-black text-sm mt-0.5">{putAwayLabel.bin || 'Unassigned'}</p>
                   </div>
                 </div>
 
                 <form onSubmit={handlePutAwaySubmit} className="space-y-4">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-bold text-slate-500 mb-1">Target Store *</label>
+                      <label className="block text-xs font-bold text-slate-300 mb-1">Target Store *</label>
                       <select
                         value={putAwayForm.store_id}
                         onChange={e => setPutAwayForm({ ...putAwayForm, store_id: e.target.value })}
                         required
-                        className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                        className="w-full bg-[#121212] border border-[#3a3a3a] text-white rounded-lg px-3 py-2 text-xs focus:border-emerald-500 focus:outline-none"
                       >
                         <option value="">Select store...</option>
                         {stores.map(s => (
@@ -578,14 +577,14 @@ export default function Inventory() {
                       </select>
                     </div>
                     <div>
-                      <label className="block text-xs font-bold text-slate-500 mb-1">Target Bin *</label>
+                      <label className="block text-xs font-bold text-slate-300 mb-1">Target Bin *</label>
                       <input
                         type="text"
-                        placeholder="Type bin location..."
+                        placeholder="Enter Bin (e.g. BIN-A1)..."
                         value={putAwayForm.bin}
                         onChange={e => setPutAwayForm({ ...putAwayForm, bin: e.target.value })}
                         required
-                        className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                        className="w-full bg-[#121212] border border-[#3a3a3a] text-white rounded-lg px-3 py-2 text-xs focus:border-emerald-500 focus:outline-none"
                       />
                     </div>
                   </div>
@@ -593,14 +592,14 @@ export default function Inventory() {
                     <button
                       type="button"
                       onClick={() => setPutAwayLabel(null)}
-                      className="border border-slate-300 text-slate-700 px-4 py-2 rounded-lg text-sm font-semibold hover:bg-slate-50 transition"
+                      className="border border-[#3a3a3a] text-slate-300 px-4 py-2 rounded-lg text-xs font-bold hover:bg-[#252525] transition"
                     >
                       Cancel
                     </button>
                     <button
                       type="submit"
                       disabled={loading}
-                      className="bg-orange-500 hover:bg-orange-600 text-white font-semibold text-sm px-5 py-2 rounded-lg shadow-sm flex items-center gap-1.5 transition disabled:opacity-50"
+                      className="bg-[#10b981] hover:bg-[#059669] text-white font-black text-xs px-5 py-2 rounded-lg shadow-md flex items-center gap-1.5 transition disabled:opacity-50"
                     >
                       <Check className="w-4 h-4" /> Assign Bin
                     </button>
@@ -611,9 +610,9 @@ export default function Inventory() {
           )}
 
           {/* PENDING PUT-AWAY LIST */}
-          <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-4">
-            <div className="flex items-center gap-2 border-b border-slate-100 pb-3">
-              <h3 className="font-extrabold text-slate-800 text-sm">
+          <div className="bg-[#1e1e1e] rounded-xl border border-[#2a2a2a] shadow-lg p-6 space-y-4">
+            <div className="flex items-center gap-2 border-b border-[#2a2a2a] pb-3">
+              <h3 className="font-black text-white text-xs uppercase tracking-wider">
                 📁 Pending Put-Away ({pendingPutAway.length})
               </h3>
             </div>
@@ -625,12 +624,12 @@ export default function Inventory() {
                     setPutAwayScan(item.label_number);
                     handlePutAwaySearch(item.label_number);
                   }}
-                  className="p-4 border border-slate-100 hover:border-orange-500 bg-slate-50 hover:bg-orange-50/20 rounded-xl cursor-pointer transition flex items-center justify-between"
+                  className="p-4 border border-[#2a2a2a] hover:border-emerald-500 bg-[#121212] hover:bg-[#252525] rounded-xl cursor-pointer transition flex items-center justify-between"
                 >
                   <div>
-                    <p className="font-bold text-slate-800 text-sm">{item.item_name}</p>
-                    <p className="text-slate-500 text-xs mt-1">
-                      Qty: <span className="font-semibold">{item.quantity} {item.unit}</span>
+                    <p className="font-extrabold text-white text-xs">{item.item_name}</p>
+                    <p className="text-slate-300 text-xs mt-1">
+                      Qty: <span className="font-bold text-white">{item.quantity} {item.unit}</span>
                       {item.batch_number ? ` | Batch: ${item.batch_number}` : ''}
                     </p>
                   </div>

@@ -1152,29 +1152,29 @@ export default function Moulding() {
   }, [showCameraModal]);
 
   return (
-    <div className="space-y-6">
+    <div className="bg-[#121212] text-slate-200 min-h-screen p-6 font-sans space-y-6">
       {/* Messages */}
       {successMessage && (
-        <div className="bg-green-100 border border-green-300 text-green-800 rounded-xl p-3.5 text-xs font-semibold animate-pulse shadow-md flex items-center gap-2">
-          <ShieldCheck className="w-5 h-5 text-green-600 flex-shrink-0" />
+        <div className="bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 rounded-xl p-3.5 text-xs font-semibold shadow-md flex items-center gap-2">
+          <ShieldCheck className="w-5 h-5 text-emerald-400 flex-shrink-0" />
           {successMessage}
         </div>
       )}
       {errorMessage && (
-        <div className="bg-red-100 border border-red-300 text-red-800 rounded-xl p-3.5 text-xs font-semibold shadow-md flex items-center gap-2">
-          <AlertTriangle className="w-5 h-5 text-red-600 flex-shrink-0" />
+        <div className="bg-red-500/10 border border-red-500/30 text-red-400 rounded-xl p-3.5 text-xs font-semibold shadow-md flex items-center gap-2">
+          <AlertTriangle className="w-5 h-5 text-red-400 flex-shrink-0" />
           {errorMessage}
         </div>
       )}
 
       {/* Header bar */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-[#2a2a2a] pb-4">
         <div>
-          <h2 className="text-xl font-extrabold text-slate-800 tracking-tight flex items-center gap-2">
-            <Factory className="w-6 h-6 text-orange-500" />
+          <h2 className="text-lg font-black text-white tracking-wide flex items-center gap-2">
+            <Factory className="w-6 h-6 text-emerald-400" />
             Moulding Production Module
           </h2>
-          <p className="text-slate-450 text-xs mt-0.5 font-medium">
+          <p className="text-slate-400 text-xs mt-0.5 font-medium">
             Manage steel tooling masters, press job cards, operator logs, defect rejections, and purges.
           </p>
         </div>
@@ -1243,16 +1243,16 @@ export default function Moulding() {
 
       {/* Tab Area 1: Job Cards */}
       {activeTab === 'jobcards' && !selectedJobCard && (
-        <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
-          <div className="px-6 py-4 border-b border-slate-200 flex justify-between items-center bg-slate-50/50 flex-wrap gap-2">
-            <h3 className="font-extrabold text-xs text-slate-800 uppercase tracking-wider">Active Moulding Job Cards</h3>
+        <div className="bg-[#1e1e1e] border border-[#2a2a2a] rounded-xl overflow-hidden shadow-lg space-y-2">
+          <div className="px-6 py-4 border-b border-[#2a2a2a] flex justify-between items-center bg-[#121212] flex-wrap gap-2">
+            <h3 className="font-black text-xs text-white uppercase tracking-wider">Active Moulding Job Cards</h3>
             <div className="flex items-center gap-3">
               <div className="relative flex items-center gap-1.5">
                 <div className="relative flex items-center">
                   <input
                     type="text"
                     placeholder="Scan Job Card QR (e.g. JC/2026/00002)..."
-                    className="bg-white border border-slate-300 focus:border-orange-500 rounded-xl px-3 py-1.5 text-[10.5px] font-bold focus:outline-none w-64 text-slate-800 shadow-inner"
+                    className="bg-[#121212] border border-[#3a3a3a] focus:border-emerald-500 rounded-xl px-3 py-1.5 text-xs font-medium focus:outline-none w-64 text-white placeholder-slate-400 shadow-inner"
                     onKeyDown={e => {
                       if (e.key === 'Enter') {
                         e.preventDefault();
@@ -1272,20 +1272,20 @@ export default function Moulding() {
                 <button
                   type="button"
                   onClick={() => handleOpenCameraScanner('jobcard')}
-                  className="p-1.5 bg-slate-100 hover:bg-slate-200 border border-slate-300 rounded-xl text-slate-650 transition"
+                  className="p-2 bg-[#121212] hover:bg-[#252525] border border-[#3a3a3a] rounded-xl text-emerald-400 transition"
                   title="Scan using Camera"
                 >
                   <Camera className="w-3.5 h-3.5" />
                 </button>
               </div>
-              <span className="text-[10px] text-slate-400 font-bold bg-slate-100 border border-slate-200 px-2 py-1 rounded-lg">Total: {jobCards.length}</span>
+              <span className="text-[10px] text-slate-300 font-extrabold bg-[#121212] border border-[#3a3a3a] px-2.5 py-1 rounded-lg">Total: {jobCards.length}</span>
             </div>
           </div>
 
           <div className="overflow-x-auto text-xs">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="bg-slate-50 border-b border-slate-200 text-slate-500 font-bold uppercase tracking-wider text-[10px]">
+                <tr className="bg-[#252525] border-b border-[#333] text-slate-200 font-black uppercase tracking-wider text-xs">
                   <th className="px-6 py-3">JOB CARD NO</th>
                   <th className="px-6 py-3">PRODUCT</th>
                   <th className="px-6 py-3">MOULD & CAVITIES</th>
@@ -1296,39 +1296,39 @@ export default function Moulding() {
                   <th className="px-6 py-3 text-center">ACTIONS</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100 font-medium">
+              <tbody className="divide-y divide-[#2a2a2a] font-medium text-slate-200">
                 {jobCards.length === 0 ? (
                   <tr>
-                    <td colSpan="8" className="text-center py-10 text-slate-400">
+                    <td colSpan="8" className="text-center py-10 text-slate-400 font-semibold">
                       No moulding job cards found. Click "Create Job Card" above to initialize a production run.
                     </td>
                   </tr>
                 ) : (
                   jobCards.map(jc => (
-                    <tr key={jc.jc_id} className="hover:bg-slate-50/50">
+                    <tr key={jc.jc_id} className="hover:bg-[#252525] border-b border-[#2a2a2a] transition">
                       <td className="px-6 py-4">
-                        <span className="font-bold text-slate-800 block">{jc.jc_number}</span>
-                        <span className="text-[10px] text-slate-400">{jc.wo_number}</span>
+                        <span className="font-extrabold text-emerald-400 text-xs block">{jc.jc_number}</span>
+                        <span className="text-[10px] text-slate-300 font-mono">{jc.wo_number}</span>
                       </td>
                       <td className="px-6 py-4">
-                        <span className="font-bold text-slate-800 block">{jc.item_name}</span>
-                        <span className="text-[10px] text-slate-400">{jc.customer_name}</span>
+                        <span className="font-extrabold text-white text-xs block">{jc.item_name}</span>
+                        <span className="text-[10px] text-slate-300">{jc.customer_name}</span>
                       </td>
                       <td className="px-6 py-4">
-                        <span className="font-bold text-slate-800 block">{jc.mould_code}</span>
-                        <span className="text-[10px] text-slate-400">{jc.cavities} Cavities ({jc.shots_required} Shots)</span>
+                        <span className="font-extrabold text-white text-xs block">{jc.mould_code}</span>
+                        <span className="text-[10px] text-slate-300">{jc.cavities} Cavities ({jc.shots_required} Shots)</span>
                       </td>
                       <td className="px-6 py-4">
-                        <span className="font-bold text-slate-800 block">{jc.machine_name}</span>
-                        <span className="text-[10px] text-slate-400">{jc.machine_code}</span>
+                        <span className="font-bold text-white text-xs block">{jc.machine_name}</span>
+                        <span className="text-[10px] text-slate-300 font-mono">{jc.machine_code}</span>
                       </td>
-                      <td className="px-6 py-4 font-bold text-slate-600">{jc.fb_number}</td>
-                      <td className="px-6 py-4 text-right font-extrabold text-slate-800">{jc.planned_qty} pcs</td>
+                      <td className="px-6 py-4 font-extrabold text-amber-400">{jc.fb_number}</td>
+                      <td className="px-6 py-4 text-right font-black text-white">{jc.planned_qty} pcs</td>
                       <td className="px-6 py-4 text-center">
-                        <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
-                          jc.status === 'Pending' ? 'bg-slate-100 text-slate-500' :
-                          jc.status === 'In Progress' ? 'bg-orange-100 text-orange-600' :
-                          'bg-green-100 text-green-700'
+                        <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase ${
+                          jc.status === 'Pending' ? 'bg-amber-500/10 text-amber-300 border border-amber-500/30' :
+                          jc.status === 'In Progress' ? 'bg-blue-500/10 text-blue-300 border border-blue-500/30' :
+                          'bg-emerald-500/10 text-emerald-300 border border-emerald-500/30'
                         }`}>
                           {jc.status}
                         </span>
@@ -1337,7 +1337,7 @@ export default function Moulding() {
                         <div className="flex items-center justify-center gap-1.5">
                           <button
                             onClick={() => handleJobCardSelect(jc)}
-                            className="p-1 text-slate-500 hover:text-orange-500 transition"
+                            className="p-1.5 text-emerald-400 hover:text-emerald-300 transition"
                             title="Open Run Console"
                           >
                             <Eye className="w-4 h-4" />

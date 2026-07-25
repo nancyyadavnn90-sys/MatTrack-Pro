@@ -62,6 +62,12 @@ const dispatchRoutes = require('./routes/dispatchRoutes');
 app.use('/api/dispatch', dispatchRoutes);
 const dashboardRoutes = require('./routes/dashboardRoutes');
 app.use('/api/dashboard', dashboardRoutes);
+const reportsRoutes = require('./routes/reportsRoutes');
+app.use('/api/reports', reportsRoutes);
+const oeeRoutes = require('./routes/oeeRoutes');
+app.use('/api/oee', oeeRoutes);
+const adminRoutes = require('./routes/adminRoutes');
+app.use('/api/admin', adminRoutes);
 app.get('/', (req, res) => {
   res.json({ message: '✅ WIP OEE Server Running!' });
 });

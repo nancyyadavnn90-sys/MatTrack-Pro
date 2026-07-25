@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import {
   LayoutDashboard, Package, PackageOpen, ClipboardCheck, Factory, Boxes,
   Truck, BarChart3, LogOut, Menu, X, ChevronDown, Bell, User, Settings, ShieldCheck
@@ -20,26 +21,98 @@ const menuItems = [
   { name: 'Dispatch', icon: Truck, path: '/dispatch' },
   { name: 'WIP Tracking', icon: BarChart3, path: '/wip' },
   { name: 'OEE Dashboard', icon: BarChart3, path: '/oee' },
+  { name: 'OEE Shift Log', icon: ClipboardCheck, path: '/oee/shift-log' },
+  { name: 'Reports', icon: BarChart3, path: '/oee/reports' },
+  { name: 'Admin Portal', icon: ShieldCheck, path: '/admin' },
 ];
+
+const featureMap = {
+  '/dashboard': 'Dashboard',
+  '/gate-pass': 'GatePass',
+  '/grn': 'GRN',
+  '/inventory': 'Store',
+  '/quality': 'Quality',
+  '/mixing': 'Production',
+  '/moulding': 'Production',
+  '/production': 'Production',
+  '/final-qc': 'Quality',
+  '/fg-receipt': 'FG',
+  '/dispatch': 'Dispatch',
+  '/wip': 'ShopFloor',
+  '/oee': 'Production',
+  '/oee/shift-log': 'Production',
+  '/oee/reports': 'Reports',
+  '/admin': 'Admin'
+};
 
 export default function Layout({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [showNotif, setShowNotif] = useState(false);
   const userMenuRef = useRef(null);
+  const notifRef = useRef(null);
   const location = useLocation();
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem('user') || '{}');
 
-  // Close dropdown when clicking outside
+  const [notifications, setNotifications] = useState([
+    { id: 1, text: 'Batch B/26/034 stuck at Curing 4.5h', type: 'red', time: '2 min ago', read: false, path: '/wip' },
+    { id: 2, text: 'Machine 3 OEE at 58% — below benchmark', type: 'red', time: '15 min ago', read: false, path: '/oee' },
+    { id: 3, text: '3 QC items pending inspection', type: 'amber', time: '1 hr ago', read: false, path: '/quality' },
+    { id: 4, text: '3 batches completed — Hero, Honda', type: 'green', time: '2 hr ago', read: false, path: '/wip' },
+  ]);
+
+  const unreadCount = notifications.filter(n => !n.read).length;
+
+  const isSuperAdmin = 
+    user.role === 'Admin' || 
+    user.role === 'System Administrator' || 
+    user.email === 'admin@jayashree.com' || 
+    user.email === 'nancy@jayashree.com' || 
+    user.email === 'khushi@jayashree.com';
+
+  const visibleMenuItems = menuItems.filter(item => {
+    if (item.path === '/admin') return isSuperAdmin;
+    if (isSuperAdmin) return true;
+    if (item.path === '/dashboard') return true;
+    const featureName = featureMap[item.path];
+    if (!featureName) return true;
+    if (!user.permissions || Object.keys(user.permissions).length === 0) return true;
+    const perm = user.permissions[featureName];
+    if (!perm) return true;
+    return perm.can_view === true || perm.can_view === 1;
+  });
+
+  // Close dropdowns when clicking outside
   useEffect(() => {
     function handleClickOutside(e) {
       if (userMenuRef.current && !userMenuRef.current.contains(e.target)) {
         setShowUserMenu(false);
       }
+      if (notifRef.current && !notifRef.current.contains(e.target)) {
+        setShowNotif(false);
+      }
     }
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  // Fetch Live Real Data Notifications Automatically
+  const fetchLiveNotifications = async () => {
+    try {
+      const res = await axios.get('http://localhost:5000/api/dashboard/notifications');
+      if (res.data && Array.isArray(res.data) && res.data.length > 0) {
+        setNotifications(res.data);
+      }
+    } catch (err) {
+      console.log('Using active notifications fallback');
+    }
+  };
+
+  useEffect(() => {
+    fetchLiveNotifications();
+    const interval = setInterval(fetchLiveNotifications, 30000); // Auto-update every 30s
+    return () => clearInterval(interval);
   }, []);
 
   const handleLogout = () => {
@@ -48,33 +121,36 @@ export default function Layout({ children }) {
     navigate('/');
   };
 
-  const notifications = [
-    { text: 'Batch B/26/034 stuck at Curing 4.5h', type: 'red', time: '2 min ago' },
-    { text: 'Machine 3 OEE at 58% — below benchmark', type: 'red', time: '15 min ago' },
-    { text: '5 QC items pending inspection', type: 'amber', time: '1 hr ago' },
-    { text: '3 batches completed — Hero, Honda', type: 'green', time: '2 hr ago' },
-  ];
+  const handleMarkAllRead = () => {
+    setNotifications(prev => prev.map(n => ({ ...n, read: true })));
+  };
+
+  const handleNotificationClick = (notif) => {
+    setNotifications(prev => prev.map(n => n.id === notif.id ? { ...n, read: true } : n));
+    setShowNotif(false);
+    if (notif.path) navigate(notif.path);
+  };
 
   return (
-    <div className="flex h-screen bg-slate-100">
+    <div className="flex h-screen bg-[#121212] text-slate-200 font-sans">
       {/* Sidebar */}
-      <aside className={`bg-slate-900 text-white transition-all duration-300 flex flex-col ${sidebarOpen ? 'w-64' : 'w-20'}`}>
+      <aside className={`bg-[#181818] border-r border-[#2a2a2a] text-white transition-all duration-300 flex flex-col ${sidebarOpen ? 'w-64' : 'w-20'}`}>
         {/* Logo */}
-        <div className="flex items-center gap-3 px-4 py-5 border-b border-slate-700">
+        <div className="flex items-center gap-3 px-4 py-5 border-b border-[#2a2a2a]">
           <img src={logo} alt="logo" className="w-10 h-10 rounded-lg flex-shrink-0" />
           {sidebarOpen && (
             <div>
-              <p className="font-bold text-sm leading-tight">
-                MatTrack<span className="text-orange-500">-Pro</span>
+              <p className="font-bold text-sm leading-tight text-white">
+                MatTrack<span className="text-emerald-400">-Pro</span>
               </p>
-              <p className="text-slate-400 text-xs">Jayashree Polymers</p>
+              <p className="text-slate-400 text-xs font-medium">Jayashree Polymers</p>
             </div>
           )}
         </div>
 
         {/* Menu */}
         <nav className="flex-1 overflow-y-auto py-4 px-2 space-y-1">
-          {menuItems.map((item) => {
+          {visibleMenuItems.map((item) => {
             const Icon = item.icon;
             const isActive = location.pathname === item.path;
             return (
@@ -83,8 +159,8 @@ export default function Layout({ children }) {
                 to={item.path}
                 className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition ${
                   isActive
-                    ? 'bg-orange-500 text-white'
-                    : 'text-slate-300 hover:bg-slate-800 hover:text-white'
+                    ? 'bg-emerald-500 text-white shadow-md shadow-emerald-500/20'
+                    : 'text-slate-300 hover:bg-[#252525] hover:text-white'
                 }`}
               >
                 <Icon className="w-5 h-5 flex-shrink-0" />
@@ -95,7 +171,7 @@ export default function Layout({ children }) {
         </nav>
 
         {/* Logout */}
-        <div className="border-t border-slate-700 p-2">
+        <div className="border-t border-[#2a2a2a] p-2">
           <button
             onClick={handleLogout}
             className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-300 hover:bg-red-500/20 hover:text-red-400 transition w-full"
@@ -107,12 +183,12 @@ export default function Layout({ children }) {
       </aside>
 
       {/* Main area */}
-      <div className="flex-1 flex flex-col overflow-hidden">
+      <div className="flex-1 flex flex-col overflow-hidden bg-[#121212]">
         {/* Topbar */}
-        <header className="bg-white border-b border-slate-200 px-6 py-3 flex items-center justify-between">
+        <header className="bg-[#1e1e1e] border-b border-[#2a2a2a] px-6 py-3 flex items-center justify-between">
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
-            className="text-slate-600 hover:text-orange-500 transition"
+            className="text-slate-300 hover:text-emerald-400 transition"
           >
             {sidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
@@ -120,92 +196,117 @@ export default function Layout({ children }) {
           <div className="flex items-center gap-4">
 
             {/* Notifications */}
-            <div className="relative">
+            <div className="relative" ref={notifRef}>
               <button
                 onClick={() => { setShowNotif(!showNotif); setShowUserMenu(false); }}
-                className="relative text-slate-600 hover:text-orange-500 transition"
+                className="relative text-slate-300 hover:text-emerald-400 transition p-1.5 rounded-lg hover:bg-[#252525]"
+                title="Notifications"
               >
                 <Bell className="w-5 h-5" />
-                <span className="absolute -top-1 -right-1 w-2 h-2 bg-orange-500 rounded-full"></span>
+                {unreadCount > 0 && (
+                  <span className="absolute top-1 right-1 w-2.5 h-2.5 bg-emerald-500 rounded-full ring-2 ring-[#1e1e1e] animate-pulse"></span>
+                )}
               </button>
 
               {showNotif && (
-                <div className="absolute right-0 mt-3 w-80 bg-white border border-slate-200 rounded-xl shadow-2xl z-50">
-                  <div className="px-4 py-3 border-b border-slate-100 flex items-center justify-between">
-                    <span className="text-slate-800 font-semibold text-sm">Notifications</span>
-                    <span className="text-xs text-orange-500 cursor-pointer hover:underline">Mark all read</span>
+                <div className="absolute right-0 mt-3 w-80 bg-[#1e1e1e] border border-[#2a2a2a] rounded-xl shadow-2xl z-50 overflow-hidden divide-y divide-[#2a2a2a]">
+                  <div className="px-4 py-3 bg-[#252525] flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <span className="text-white font-black text-xs uppercase tracking-wider">Notifications</span>
+                      {unreadCount > 0 && (
+                        <span className="bg-emerald-500/20 text-emerald-400 text-[10px] font-black px-1.5 py-0.5 rounded-full border border-emerald-500/30">
+                          {unreadCount} new
+                        </span>
+                      )}
+                    </div>
+                    {unreadCount > 0 && (
+                      <button
+                        onClick={handleMarkAllRead}
+                        className="text-[11px] text-emerald-400 hover:text-emerald-300 font-bold transition hover:underline"
+                      >
+                        Mark all read
+                      </button>
+                    )}
                   </div>
-                  {notifications.map((n, i) => (
-                    <div key={i} className="px-4 py-3 border-b border-slate-100 hover:bg-slate-50 cursor-pointer">
-                      <div className="flex items-start gap-3">
-                        <div className={`w-2 h-2 rounded-full mt-1.5 flex-shrink-0 ${
-                          n.type === 'red' ? 'bg-red-500' :
-                          n.type === 'amber' ? 'bg-amber-500' : 'bg-green-500'
+
+                  <div className="max-h-80 overflow-y-auto divide-y divide-[#2a2a2a]">
+                    {notifications.map((n) => (
+                      <div
+                        key={n.id}
+                        onClick={() => handleNotificationClick(n)}
+                        className={`px-4 py-3 hover:bg-[#252525] cursor-pointer transition flex items-start gap-3 ${
+                          !n.read ? 'bg-emerald-500/5' : 'opacity-70'
+                        }`}
+                      >
+                        <div className={`w-2.5 h-2.5 rounded-full mt-1 flex-shrink-0 ${
+                          n.type === 'red' ? 'bg-red-500 shadow-sm shadow-red-500/50' :
+                          n.type === 'amber' ? 'bg-amber-500 shadow-sm shadow-amber-500/50' : 'bg-emerald-500 shadow-sm shadow-emerald-500/50'
                         }`}></div>
-                        <div>
-                          <p className="text-slate-700 text-xs">{n.text}</p>
-                          <p className="text-slate-400 text-xs mt-1">{n.time}</p>
+                        <div className="flex-1">
+                          <p className={`text-xs ${!n.read ? 'text-white font-extrabold' : 'text-slate-300 font-medium'}`}>
+                            {n.text}
+                          </p>
+                          <p className="text-[10px] text-slate-400 font-mono mt-1">{n.time}</p>
                         </div>
                       </div>
-                    </div>
-                  ))}
-                  <div className="px-4 py-2.5 text-center">
-                    <span className="text-orange-500 text-xs cursor-pointer hover:underline">View all notifications</span>
+                    ))}
+                    {notifications.length === 0 && (
+                      <div className="px-4 py-6 text-center text-xs text-slate-400 italic">No notifications.</div>
+                    )}
                   </div>
                 </div>
               )}
             </div>
 
             {/* User dropdown */}
-            <div className="relative pl-4 border-l border-slate-200" ref={userMenuRef}>
+            <div className="relative pl-4 border-l border-[#2a2a2a]" ref={userMenuRef}>
               <button
                 onClick={() => { setShowUserMenu(!showUserMenu); setShowNotif(false); }}
                 className="flex items-center gap-2 hover:opacity-80 transition"
               >
-                <div className="w-9 h-9 rounded-full bg-orange-500 flex items-center justify-center text-white font-semibold text-sm">
-                  {user?.name?.charAt(0) || 'U'}
+                <div className="w-9 h-9 rounded-full bg-emerald-500 flex items-center justify-center text-white font-black text-sm">
+                  {user?.name?.charAt(0) || 'N'}
                 </div>
                 <div className="hidden md:block text-left">
-                  <p className="text-sm font-medium text-slate-800 leading-tight">{user?.name}</p>
-                  <p className="text-xs text-slate-500">{user?.role}</p>
+                  <p className="text-xs font-bold text-white leading-tight">{user?.name || 'Nancy Yadav'}</p>
+                  <p className="text-[10px] text-slate-400 font-medium">{user?.role || 'Manager'}</p>
                 </div>
                 <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform ${showUserMenu ? 'rotate-180' : ''}`} />
               </button>
 
               {showUserMenu && (
-                <div className="absolute right-0 mt-3 w-56 bg-white border border-slate-200 rounded-xl shadow-2xl z-50">
+                <div className="absolute right-0 mt-3 w-56 bg-[#1e1e1e] border border-[#2a2a2a] rounded-xl shadow-2xl z-50 overflow-hidden divide-y divide-[#2a2a2a]">
                   {/* User info */}
-                  <div className="px-4 py-3 border-b border-slate-100">
-                    <p className="text-xs text-slate-500">Signed in as</p>
-                    <p className="text-sm font-semibold text-slate-800 truncate">{user?.email || 'admin@jayashree.com'}</p>
+                  <div className="px-4 py-3 bg-[#252525]">
+                    <p className="text-[10px] text-slate-400 font-medium">Signed in as</p>
+                    <p className="text-xs font-black text-emerald-400 truncate mt-0.5">{user?.email || user?.username || 'admin@jayashree.com'}</p>
                   </div>
 
-                  {/* Menu items */}
-                  <div className="py-1">
-                    <button
-                      onClick={() => { setShowUserMenu(false); navigate('/profile'); }}
-                      className="w-full flex items-center gap-3 px-4 py-2.5 text-slate-700 hover:bg-slate-50 hover:text-orange-500 transition text-sm"
+                  {/* Options */}
+                  <div className="p-1 space-y-0.5">
+                    <Link
+                      to="/profile"
+                      onClick={() => setShowUserMenu(false)}
+                      className="w-full flex items-center gap-2.5 px-3 py-2 text-slate-200 hover:bg-[#252525] hover:text-white rounded-lg transition text-xs font-bold"
                     >
-                      <User className="w-4 h-4" />
-                      Profile
-                    </button>
-                    <button
-                      onClick={() => { setShowUserMenu(false); navigate('/settings'); }}
-                      className="w-full flex items-center gap-3 px-4 py-2.5 text-slate-700 hover:bg-slate-50 hover:text-orange-500 transition text-sm"
+                      <User className="w-4 h-4 text-emerald-400" /> Profile
+                    </Link>
+                    <Link
+                      to="/admin/settings"
+                      onClick={() => setShowUserMenu(false)}
+                      className="w-full flex items-center gap-2.5 px-3 py-2 text-slate-200 hover:bg-[#252525] hover:text-white rounded-lg transition text-xs font-bold"
                     >
-                      <Settings className="w-4 h-4" />
-                      Settings
-                    </button>
+                      <Settings className="w-4 h-4 text-slate-400" /> Settings
+                    </Link>
                   </div>
 
                   {/* Sign out */}
-                  <div className="border-t border-slate-100 py-1">
+                  <div className="p-1">
                     <button
                       onClick={handleLogout}
-                      className="w-full flex items-center gap-3 px-4 py-2.5 text-red-500 hover:bg-red-50 transition text-sm"
+                      className="w-full flex items-center gap-2.5 px-3 py-2 text-red-400 hover:bg-red-500/20 rounded-lg transition text-xs font-black"
                     >
-                      <LogOut className="w-4 h-4" />
-                      Sign Out
+                      <LogOut className="w-4 h-4" /> Sign Out
                     </button>
                   </div>
                 </div>

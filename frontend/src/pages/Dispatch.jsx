@@ -536,13 +536,13 @@ export default function Dispatch() {
 
   const getStatusColor = (status) => {
     switch (status) {
-      case 'Draft': return 'bg-slate-100 text-slate-700 border-slate-200';
-      case 'PDI Pending': return 'bg-amber-50 text-amber-700 border-amber-200';
-      case 'PDI Failed': return 'bg-red-50 text-red-700 border-red-200';
-      case 'Ready to Dispatch': return 'bg-blue-50 text-blue-700 border-blue-200';
-      case 'Dispatched': return 'bg-green-50 text-green-700 border-green-200';
-      case 'Delivered': return 'bg-green-900 text-white border-green-950';
-      default: return 'bg-slate-50 text-slate-500';
+      case 'Draft': return 'bg-slate-500/10 text-slate-400 border border-slate-500/30 font-black text-[10px] px-2.5 py-0.5 rounded-full uppercase';
+      case 'PDI Pending': return 'bg-amber-500/10 text-amber-400 border border-amber-500/30 font-black text-[10px] px-2.5 py-0.5 rounded-full uppercase';
+      case 'PDI Failed': return 'bg-red-500/10 text-red-400 border border-red-500/30 font-black text-[10px] px-2.5 py-0.5 rounded-full uppercase';
+      case 'Ready to Dispatch': return 'bg-blue-500/10 text-blue-400 border border-blue-500/30 font-black text-[10px] px-2.5 py-0.5 rounded-full uppercase';
+      case 'Dispatched': return 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 font-black text-[10px] px-2.5 py-0.5 rounded-full uppercase';
+      case 'Delivered': return 'bg-emerald-500 text-white font-black text-[10px] px-2.5 py-0.5 rounded-full uppercase';
+      default: return 'bg-slate-800 text-slate-400 font-bold text-[10px] px-2.5 py-0.5 rounded-full uppercase';
     }
   };
 
@@ -550,7 +550,7 @@ export default function Dispatch() {
   const isFullyLoaded = selectedOrder && selectedOrder.items && selectedOrder.items.every(item => item.loaded_qty >= item.qty);
 
   return (
-    <div className="space-y-6">
+    <div className="bg-[#121212] text-slate-200 min-h-screen p-6 font-sans space-y-6">
       
       {/* ──────────────────────────────────────────────────────── */}
       {/* 1. VIEW STATE: DISPATCH ORDERS LIST PAGE */}
@@ -558,12 +558,12 @@ export default function Dispatch() {
       {activeView === 'list' && (
         <>
           {/* Header */}
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#2a2a2a] pb-4">
             <div>
-              <h1 className="text-2xl font-black text-slate-800 tracking-tight flex items-center gap-2">
-                <Truck className="w-8 h-8 text-orange-500" /> Dispatch Orders
+              <h1 className="text-lg font-black text-white tracking-wide flex items-center gap-2">
+                <Truck className="w-6 h-6 text-emerald-400" /> Dispatch Orders
               </h1>
-              <p className="text-slate-500 text-sm mt-0.5">
+              <p className="text-slate-400 text-xs font-medium mt-0.5">
                 Manage finished goods dispatch to Hero, Honda and Yamaha
               </p>
             </div>
@@ -573,7 +573,7 @@ export default function Dispatch() {
                 handleResetForm();
                 setActiveView('create');
               }}
-              className="flex items-center gap-1.5 bg-orange-500 text-white px-5 py-2.5 rounded-lg text-xs font-bold hover:bg-orange-600 transition shadow-sm self-start md:self-auto"
+              className="flex items-center gap-1.5 bg-[#10b981] text-white px-4 py-2 rounded-xl text-xs font-black hover:bg-[#059669] transition shadow-lg shadow-emerald-500/10"
             >
               <Plus className="w-4 h-4" /> New Dispatch Order
             </button>
@@ -581,42 +581,42 @@ export default function Dispatch() {
 
           {/* 4 Stats Cards */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
+            <div className="bg-[#1e1e1e] p-4 rounded-xl border border-[#2a2a2a] shadow-md flex items-center justify-between">
               <div>
-                <p className="text-slate-400 text-xxs font-bold uppercase tracking-wider">Total Dispatches</p>
-                <p className="text-2xl font-black text-slate-800 mt-1">{stats.total_dispatches}</p>
+                <p className="text-slate-400 text-[10px] font-black uppercase tracking-wider">Total Dispatches</p>
+                <p className="text-2xl font-black text-white mt-1">{stats.total_dispatches}</p>
               </div>
-              <div className="w-10 h-10 rounded-full bg-slate-50 border border-slate-150 flex items-center justify-center text-lg text-slate-600 shadow-inner">📋</div>
+              <div className="w-10 h-10 rounded-xl bg-[#121212] border border-[#2a2a2a] flex items-center justify-center text-lg text-slate-300">📋</div>
             </div>
 
-            <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
+            <div className="bg-[#1e1e1e] p-4 rounded-xl border border-[#2a2a2a] shadow-md flex items-center justify-between">
               <div>
-                <p className="text-slate-400 text-xxs font-bold uppercase tracking-wider">Pending PDI</p>
-                <p className="text-2xl font-black text-amber-500 mt-1">{stats.pending_pdi}</p>
+                <p className="text-slate-400 text-[10px] font-black uppercase tracking-wider">Pending PDI</p>
+                <p className="text-2xl font-black text-amber-400 mt-1">{stats.pending_pdi}</p>
               </div>
-              <div className="w-10 h-10 rounded-full bg-amber-50 border border-amber-100 flex items-center justify-center text-lg text-amber-500 shadow-inner">🔎</div>
+              <div className="w-10 h-10 rounded-full bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-lg text-amber-400">🔎</div>
             </div>
 
-            <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
+            <div className="bg-[#1e1e1e] p-4 rounded-xl border border-[#2a2a2a] shadow-md flex items-center justify-between">
               <div>
-                <p className="text-slate-400 text-xxs font-bold uppercase tracking-wider">Ready to Dispatch</p>
-                <p className="text-2xl font-black text-blue-600 mt-1">{stats.ready_to_dispatch}</p>
+                <p className="text-slate-400 text-[10px] font-black uppercase tracking-wider">Ready to Dispatch</p>
+                <p className="text-2xl font-black text-blue-400 mt-1">{stats.ready_to_dispatch}</p>
               </div>
-              <div className="w-10 h-10 rounded-full bg-blue-50 border border-blue-100 flex items-center justify-center text-lg text-blue-600 shadow-inner">🚚</div>
+              <div className="w-10 h-10 rounded-full bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-lg text-blue-400">🚚</div>
             </div>
 
-            <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
+            <div className="bg-[#1e1e1e] p-4 rounded-xl border border-[#2a2a2a] shadow-md flex items-center justify-between">
               <div>
-                <p className="text-slate-400 text-xxs font-bold uppercase tracking-wider">Dispatched Today</p>
-                <p className="text-2xl font-black text-green-600 mt-1">{stats.dispatched_today}</p>
+                <p className="text-slate-400 text-[10px] font-black uppercase tracking-wider">Dispatched Today</p>
+                <p className="text-2xl font-black text-emerald-400 mt-1">{stats.dispatched_today}</p>
               </div>
-              <div className="w-10 h-10 rounded-full bg-green-50 border border-green-100 flex items-center justify-center text-lg text-green-600 shadow-inner">✅</div>
+              <div className="w-10 h-10 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-lg text-emerald-400">✅</div>
             </div>
           </div>
 
           {/* Pending Alert Banner */}
           {stats.ready_to_dispatch > 0 && (
-            <div className="bg-orange-50 border border-orange-255 p-4 rounded-xl flex flex-col md:flex-row md:items-center justify-between gap-4 animate-pulse shadow-sm">
+            <div className="bg-amber-500/10 border border-amber-500/30 p-4 rounded-xl flex flex-col md:flex-row md:items-center justify-between gap-4 text-xs font-semibold text-amber-300">
               <div className="flex items-start gap-3">
                 <div className="w-9 h-9 rounded-full bg-orange-100 flex items-center justify-center text-lg flex-shrink-0">🚚</div>
                 <div>
@@ -628,51 +628,51 @@ export default function Dispatch() {
           )}
 
           {/* Main Table */}
-          <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-            <div className="p-4 border-b border-slate-100 bg-slate-50 flex items-center justify-between">
-              <span className="text-slate-800 font-bold text-sm">Active Dispatch Orders</span>
+          <div className="bg-[#1e1e1e] rounded-xl border border-[#2a2a2a] shadow-lg overflow-hidden space-y-2 p-4">
+            <div className="pb-3 border-b border-[#2a2a2a] flex items-center justify-between">
+              <span className="text-white font-black text-xs uppercase tracking-wider">Active Dispatch Orders</span>
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                <Search className="absolute left-3 top-2 w-4 h-4 text-slate-400" />
                 <input
                   type="text"
                   placeholder="Filter dispatches..."
                   value={filterText}
                   onChange={(e) => setFilterText(e.target.value)}
-                  className="pl-9 pr-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs w-64 focus:outline-none focus:ring-1 focus:ring-orange-500"
+                  className="pl-9 pr-3 py-1.5 bg-[#121212] border border-[#3a3a3a] rounded-xl text-xs w-64 text-white focus:outline-none focus:border-emerald-500 font-medium transition"
                 />
               </div>
             </div>
 
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto border border-[#2a2a2a] rounded-xl">
               <table className="w-full text-left border-collapse">
                 <thead>
-                  <tr className="border-b border-slate-100 text-slate-400 text-xxs font-bold uppercase tracking-wider bg-slate-50/50">
+                  <tr className="border-b border-[#333] text-slate-200 text-xs font-black uppercase tracking-wider bg-[#252525]">
                     <th className="py-3.5 px-4">DO Number</th>
                     <th className="py-3.5 px-4">Customer</th>
                     <th className="py-3.5 px-4 font-mono">Vehicle No</th>
                     <th className="py-3.5 px-4 text-right">Items Lines</th>
-                    <th className="py-3.5 px-4 text-right">Total Qty</th>
+                    <th className="py-3.5 px-4 text-right text-emerald-400">Total Qty</th>
                     <th className="py-3.5 px-4">Dispatch Date</th>
                     <th className="py-3.5 px-4 text-center">PDI Status</th>
                     <th className="py-3.5 px-4 text-center">Status</th>
                     <th className="py-3.5 px-4 text-right">Action</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-100 text-xs">
+                <tbody className="divide-y divide-[#2a2a2a] text-xs">
                   {dispatchOrders
                     .filter(d => !filterText || d.do_number.toLowerCase().includes(filterText.toLowerCase()) || d.customer_name.toLowerCase().includes(filterText.toLowerCase()) || d.vehicle_number?.toLowerCase().includes(filterText.toLowerCase()))
                     .map(d => (
                       <tr
                         key={d.do_id}
                         onClick={() => viewOrderDetails(d.do_id)}
-                        className="hover:bg-slate-50/80 cursor-pointer transition font-medium"
+                        className="hover:bg-[#252525] border-b border-[#2a2a2a] cursor-pointer transition font-medium"
                       >
-                        <td className="py-4 px-4 font-bold text-slate-800">{d.do_number}</td>
-                        <td className="py-4 px-4 text-slate-800">{d.customer_name}</td>
-                        <td className="py-4 px-4 font-mono text-slate-655 font-bold">{d.vehicle_number || '—'}</td>
-                        <td className="py-4 px-4 text-right">{d.item_lines} lines</td>
-                        <td className="py-4 px-4 text-right font-black text-slate-700">{parseFloat(d.total_pieces).toLocaleString()} Pcs</td>
-                        <td className="py-4 px-4 text-slate-500">{formatDate(d.dispatch_date)}</td>
+                        <td className="py-3.5 px-4 font-extrabold text-emerald-400">{d.do_number}</td>
+                        <td className="py-3.5 px-4 font-extrabold text-white">{d.customer_name}</td>
+                        <td className="py-3.5 px-4 font-mono text-slate-300 font-bold">{d.vehicle_number || '—'}</td>
+                        <td className="py-3.5 px-4 text-right text-slate-300">{d.item_lines} lines</td>
+                        <td className="py-3.5 px-4 text-right font-black text-white">{parseFloat(d.total_pieces).toLocaleString()} Pcs</td>
+                        <td className="py-3.5 px-4 text-slate-300 font-mono">{formatDate(d.dispatch_date)}</td>
                         <td className="py-4 px-4 text-center" onClick={(e) => e.stopPropagation()}>
                           <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold border ${
                             d.pdi_status === 'Passed' ? 'bg-green-50 text-green-700 border-green-200' :

@@ -617,7 +617,7 @@ export default function Production() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="bg-[#121212] text-slate-200 min-h-screen p-6 font-sans space-y-6">
       {/* Alert Banner */}
       {alert && (
         <div className={`fixed top-4 right-4 z-50 px-4 py-3 rounded-2xl shadow-xl flex items-center gap-2 animate-in slide-in-from-top duration-300 font-extrabold text-xs uppercase tracking-wide border ${
@@ -630,13 +630,13 @@ export default function Production() {
       )}
 
       {/* Page Header */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-white border border-slate-200 rounded-3xl p-6 shadow-sm">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-[#2a2a2a] pb-4">
         <div>
-          <h1 className="text-xl font-black text-slate-800 flex items-center gap-2">
-            <Factory className="w-6 h-6 text-orange-500" />
+          <h1 className="text-lg font-black text-white flex items-center gap-2">
+            <Factory className="w-6 h-6 text-emerald-400" />
             Production Planning & Shop Floor
           </h1>
-          <p className="text-slate-400 text-xs mt-0.5 font-bold font-mono">Manage work orders, bills of materials, routings, material requisitions, and live factory tracking.</p>
+          <p className="text-slate-400 text-xs mt-0.5 font-medium">Manage work orders, bills of materials, routings, material requisitions, and live factory tracking.</p>
         </div>
 
         {/* Dynamic header actions */}
@@ -704,7 +704,7 @@ export default function Production() {
       </div>
 
       {/* Tabs list switchers */}
-      <div className="flex border-b border-slate-200 bg-white border rounded-2xl p-1.5 shadow-sm overflow-x-auto gap-1">
+      <div className="flex border border-[#2a2a2a] bg-[#1e1e1e] rounded-xl p-1.5 shadow-md overflow-x-auto gap-1">
         {[
           { key: 'workorders', label: 'Work Orders', count: workOrders.length },
           { key: 'bom', label: 'Bill of Materials (BOM)', count: boms.length },
@@ -719,16 +719,16 @@ export default function Production() {
               setSelectedWO(null);
               setSelectedMRN(null);
             }}
-            className={`flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-extrabold transition whitespace-nowrap ${
+            className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-bold transition whitespace-nowrap ${
               activeTab === tab.key
-                ? 'bg-orange-55 text-orange-600 border border-orange-200/55'
-                : 'text-slate-555 hover:text-slate-700 hover:bg-slate-50'
+                ? 'bg-[#10b981] text-white shadow-md'
+                : 'text-slate-400 hover:text-white hover:bg-[#252525]'
             }`}
           >
             {tab.label}
             {tab.count !== undefined && (
-              <span className={`px-1.5 py-0.5 text-[9px] rounded-full font-black ${
-                activeTab === tab.key ? 'bg-orange-100 text-orange-700' : 'bg-slate-100 text-slate-550'
+              <span className={`px-2 py-0.5 text-[10px] rounded-full font-black ${
+                activeTab === tab.key ? 'bg-emerald-950 text-emerald-400 border border-emerald-500/30' : 'bg-[#121212] text-slate-300'
               }`}>
                 {tab.count}
               </span>
@@ -744,14 +744,14 @@ export default function Production() {
           {!selectedWO && (
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
               {[
-                { title: 'Total Work Orders', val: woStats.total, color: 'border-slate-200 text-slate-800' },
-                { title: 'In Progress Orders', val: woStats.inProgress, color: 'border-orange-200 text-orange-600 bg-orange-50/20' },
-                { title: 'Completed This Month', val: woStats.completedMonth, color: 'border-green-200 text-green-600 bg-green-50/20' },
-                { title: 'Overdue Delivery', val: woStats.overdue, color: 'border-red-200 text-red-600 bg-red-50/20' }
+                { title: 'Total Work Orders', val: woStats.total, valColor: 'text-white' },
+                { title: 'In Progress Orders', val: woStats.inProgress, valColor: 'text-amber-400' },
+                { title: 'Completed This Month', val: woStats.completedMonth, valColor: 'text-emerald-400' },
+                { title: 'Overdue Delivery', val: woStats.overdue, valColor: 'text-red-400' }
               ].map((card, i) => (
-                <div key={i} className={`bg-white border rounded-2xl p-5 shadow-sm flex flex-col justify-between ${card.color}`}>
-                  <span className="text-[10px] text-slate-400 font-extrabold uppercase tracking-wide block">{card.title}</span>
-                  <span className="text-2xl font-black mt-2 block">{card.val}</span>
+                <div key={i} className="bg-[#1e1e1e] border border-[#2a2a2a] rounded-xl p-4 shadow-md flex flex-col justify-between">
+                  <span className="text-[10px] text-slate-400 font-black uppercase tracking-wider block">{card.title}</span>
+                  <span className={`text-2xl font-black mt-2 block ${card.valColor}`}>{card.val}</span>
                 </div>
               ))}
             </div>
@@ -759,13 +759,13 @@ export default function Production() {
 
           {/* List panel */}
           {!selectedWO ? (
-            <div className="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-sm">
+            <div className="bg-[#1e1e1e] border border-[#2a2a2a] rounded-xl overflow-hidden shadow-lg">
               {/* Filter grid */}
-              <div className="p-6 border-b border-slate-200 bg-slate-50/50 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-6 gap-3 text-xs font-semibold text-slate-650">
+              <div className="p-4 border-b border-[#2a2a2a] bg-[#121212] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-6 gap-3 text-xs font-semibold">
                 <div>
                   <label className="block text-slate-400 uppercase text-[9px] font-black mb-1">Status</label>
                   <select
-                    className="w-full bg-white border border-slate-350 rounded-xl p-2 font-bold text-slate-700"
+                    className="w-full bg-[#1e1e1e] border border-[#3a3a3a] rounded-lg p-2 font-bold text-white text-xs focus:border-emerald-500 focus:outline-none"
                     value={woFilters.status}
                     onChange={e => setWoFilters(prev => ({ ...prev, status: e.target.value }))}
                   >
@@ -781,7 +781,7 @@ export default function Production() {
                 <div>
                   <label className="block text-slate-400 uppercase text-[9px] font-black mb-1">Customer</label>
                   <select
-                    className="w-full bg-white border border-slate-350 rounded-xl p-2 font-bold text-slate-700"
+                    className="w-full bg-[#1e1e1e] border border-[#3a3a3a] rounded-lg p-2 font-bold text-white text-xs focus:border-emerald-500 focus:outline-none"
                     value={woFilters.customer_id}
                     onChange={e => setWoFilters(prev => ({ ...prev, customer_id: e.target.value }))}
                   >
@@ -795,7 +795,7 @@ export default function Production() {
                 <div>
                   <label className="block text-slate-400 uppercase text-[9px] font-black mb-1">Product</label>
                   <select
-                    className="w-full bg-white border border-slate-350 rounded-xl p-2 font-bold text-slate-700"
+                    className="w-full bg-[#1e1e1e] border border-[#3a3a3a] rounded-lg p-2 font-bold text-white text-xs focus:border-emerald-500 focus:outline-none"
                     value={woFilters.product_id}
                     onChange={e => setWoFilters(prev => ({ ...prev, product_id: e.target.value }))}
                   >
@@ -848,14 +848,14 @@ export default function Production() {
 
               {/* Work Orders Table */}
               <div className="overflow-x-auto">
-                <table className="w-full text-xs font-semibold text-slate-750 text-left border-collapse">
-                  <thead className="bg-slate-50 border-b border-slate-200 text-slate-400 font-extrabold uppercase text-[9px] tracking-wider">
+                <table className="w-full text-xs font-semibold text-slate-200 text-left border-collapse">
+                  <thead className="bg-[#252525] border-b border-[#333] text-slate-200 font-black uppercase text-xs tracking-wider">
                     <tr>
                       <th className="px-6 py-3.5">WO Number</th>
                       <th className="px-6 py-3.5">Product</th>
                       <th className="px-6 py-3.5">Customer</th>
                       <th className="px-6 py-3.5 text-center">Planned Qty</th>
-                      <th className="px-6 py-3.5 text-center">Produced Qty</th>
+                      <th className="px-6 py-3.5 text-center text-amber-400">Produced Qty</th>
                       <th className="px-6 py-3.5">Progress</th>
                       <th className="px-6 py-3.5">Delivery Due</th>
                       <th className="px-6 py-3.5">Priority</th>
@@ -863,31 +863,31 @@ export default function Production() {
                       <th className="px-6 py-3.5 text-right">Actions</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-100">
+                  <tbody className="divide-y divide-[#2a2a2a]">
                     {loading ? (
                       <tr>
                         <td colSpan="10" className="px-6 py-12 text-center text-slate-400">
-                          <RotateCw className="w-8 h-8 animate-spin mx-auto text-slate-300" />
+                          <RotateCw className="w-8 h-8 animate-spin mx-auto text-emerald-400" />
                           <p className="mt-2 font-bold">Retrieving Work Orders queue...</p>
                         </td>
                       </tr>
                     ) : workOrders.length === 0 ? (
                       <tr>
                         <td colSpan="10" className="px-6 py-12 text-center text-slate-400">
-                          <ClipboardList className="w-12 h-12 mx-auto text-slate-300 mb-2" />
-                          <p className="font-bold text-slate-600">No Work Orders found</p>
+                          <ClipboardList className="w-12 h-12 mx-auto text-slate-400 mb-2" />
+                          <p className="font-bold text-white">No Work Orders found</p>
                         </td>
                       </tr>
                     ) : (
                       workOrders.map(wo => {
                         const pct = wo.planned_qty > 0 ? Math.min(100, Math.round((wo.produced_qty || 0) / wo.planned_qty * 100)) : 0;
                         return (
-                          <tr key={wo.wo_id} className="hover:bg-slate-55 transition">
+                          <tr key={wo.wo_id} className="hover:bg-[#252525] border-b border-[#2a2a2a] transition">
                             <td className="px-6 py-4">
                               <button
                                 type="button"
                                 onClick={() => handleOpenWODetails(wo.wo_id)}
-                                className="font-extrabold text-orange-600 hover:text-orange-700 hover:underline text-[12px]"
+                                className="font-extrabold text-emerald-400 hover:text-emerald-300 hover:underline text-xs"
                               >
                                 {wo.wo_number}
                               </button>

@@ -24,9 +24,40 @@ export default function Login() {
         email,
         password,
       });
+      const user = res.data.user;
       localStorage.setItem('token', res.data.token);
-      localStorage.setItem('user', JSON.stringify(res.data.user));
-      navigate('/dashboard');
+      localStorage.setItem('user', JSON.stringify(user));
+
+      // Smart Redirect to First Permitted Module
+      const isAdmin = user.role === 'Admin' || user.role === 'System Administrator';
+      const routeList = [
+        { path: '/dashboard', feature: 'Dashboard' },
+        { path: '/gate-pass', feature: 'GatePass' },
+        { path: '/grn', feature: 'GRN' },
+        { path: '/inventory', feature: 'Store' },
+        { path: '/quality', feature: 'Quality' },
+        { path: '/mixing', feature: 'Production' },
+        { path: '/moulding', feature: 'Production' },
+        { path: '/production', feature: 'Production' },
+        { path: '/final-qc', feature: 'Quality' },
+        { path: '/fg-receipt', feature: 'FG' },
+        { path: '/dispatch', feature: 'Dispatch' },
+        { path: '/wip', feature: 'ShopFloor' },
+        { path: '/oee', feature: 'Production' },
+        { path: '/oee/shift-log', feature: 'Production' }
+      ];
+
+      let targetRoute = '/dashboard';
+
+      if (!isAdmin && user.permissions && Object.keys(user.permissions).length > 0) {
+        const allowed = routeList.find(r => {
+          const perm = user.permissions[r.feature];
+          return (!perm || (perm.can_view !== false && perm.can_view !== 0));
+        });
+        if (allowed) targetRoute = allowed.path;
+      }
+
+      navigate(targetRoute);
     } catch (err) {
       setError(err.response?.data?.message || 'Login failed');
     } finally {

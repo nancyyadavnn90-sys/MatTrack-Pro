@@ -537,26 +537,26 @@ export default function Quality() {
   };
 
   return (
-    <div className="space-y-6">
-
-      {/* RELATED / QUICK LINKS BAR */}
+    <div className="bg-[#121212] text-slate-200 min-h-screen p-6 font-sans space-y-6">
+      
+      {/* RELATED QUICK LINKS */}
       <div className="flex items-center gap-2 flex-wrap">
-        <span className="text-slate-400 text-xs font-medium uppercase tracking-wider">Related</span>
+        <span className="text-slate-400 text-xs font-black uppercase">RELATED</span>
         <button
           onClick={() => window.location.href = '/grn'}
-          className="flex items-center gap-1.5 bg-slate-50 text-slate-700 border border-slate-200 px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-slate-100 transition"
+          className="flex items-center gap-1.5 bg-[#1e1e1e] text-slate-300 border border-[#2a2a2a] px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-[#252525] transition"
         >
-          📦 GRN
+          📦 Goods Receipt Note
         </button>
         <button
           onClick={() => window.location.href = '/gate-pass'}
-          className="flex items-center gap-1.5 bg-slate-50 text-slate-700 border border-slate-200 px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-slate-100 transition"
+          className="flex items-center gap-1.5 bg-[#1e1e1e] text-slate-300 border border-[#2a2a2a] px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-[#252525] transition"
         >
           🚚 Gate Pass
         </button>
         <button
           onClick={() => window.location.href = '/inventory'}
-          className="flex items-center gap-1.5 bg-slate-50 text-slate-700 border border-slate-200 px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-slate-100 transition"
+          className="flex items-center gap-1.5 bg-[#1e1e1e] text-slate-300 border border-[#2a2a2a] px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-[#252525] transition"
         >
           🗃️ Store
         </button>
@@ -564,18 +564,18 @@ export default function Quality() {
 
       {/* HEADER SECTION */}
       {viewState === 'list' && (
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#2a2a2a] pb-4">
           <div>
-            <h1 className="text-2xl font-black text-slate-800 tracking-tight flex items-center gap-2">
-              <ShieldAlert className="w-7 h-7 text-orange-500" /> Quality Control
+            <h1 className="text-lg font-black text-white tracking-wide flex items-center gap-2">
+              <ShieldAlert className="w-6 h-6 text-emerald-400" /> Quality Control
             </h1>
-            <p className="text-slate-500 text-sm mt-0.5">
+            <p className="text-slate-400 text-xs font-medium mt-0.5">
               Inspect inward materials, track WIP quality, review FG batches, and resolve NCRs.
             </p>
           </div>
 
           {/* SUB-TABS NAVIGATION */}
-          <div className="flex bg-white p-1 rounded-xl border border-slate-200 shadow-sm self-start overflow-x-auto max-w-full">
+          <div className="flex bg-[#1e1e1e] p-1 rounded-xl border border-[#2a2a2a] shadow-md self-start overflow-x-auto max-w-full">
             {[
               { id: 'inward', label: 'Inward', icon: '📥' },
               { id: 'inprocess', label: 'In-Process', icon: '⚙️' },
@@ -586,10 +586,10 @@ export default function Quality() {
               <button
                 key={t.id}
                 onClick={() => { setActiveTab(t.id); setFilterText(''); }}
-                className={`flex items-center gap-1.5 px-4 py-2.5 rounded-lg text-xs font-bold transition whitespace-nowrap ${
+                className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-bold transition whitespace-nowrap ${
                   activeTab === t.id
-                    ? 'bg-orange-500 text-white shadow-sm'
-                    : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                    ? 'bg-[#10b981] text-white shadow-md'
+                    : 'text-slate-400 hover:bg-[#252525] hover:text-white'
                 }`}
               >
                 <span>{t.icon}</span>
@@ -604,24 +604,24 @@ export default function Quality() {
       {viewState === 'list' && (
         <div className="space-y-6">
 
-          {/* BARCODE SCANNER & FILTER HEADER (shown for all tabs) */}
-          {['inward', 'inprocess', 'final', 'passed', 'ncs'].includes(activeTab) && (
-            <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 max-w-4xl mx-auto space-y-4">
-              <label className="block text-sm font-bold text-slate-700">QC Inspection Queue</label>
+          {/* SCAN SEARCH BAR FOR QUEUE TABS */}
+          {activeTab !== 'nc' && activeTab !== 'history' && (
+            <div className="bg-[#1e1e1e] rounded-xl border border-[#2a2a2a] shadow-lg p-6 space-y-4 max-w-4xl mx-auto">
+              <label className="block text-xs font-black uppercase text-white tracking-wider">QC Inspection Queue</label>
               <div className="flex gap-2">
                 <div className="relative flex-1">
                   <span className="absolute inset-y-0 left-0 pl-3 flex items-center">
-                    <Search className="w-5 h-5 text-slate-400" />
+                    <Search className="w-4 h-4 text-slate-400" />
                   </span>
                   <input
                     type="text"
                     placeholder="Scan label barcode to start inspection..."
                     onKeyDown={e => e.key === 'Enter' && handleBarcodeSearch(e.target.value)}
-                    className="w-full pl-10 pr-10 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-orange-500 focus:bg-white focus:outline-none transition"
+                    className="w-full pl-9 pr-10 py-2.5 bg-[#121212] border border-[#3a3a3a] rounded-xl text-xs text-white placeholder-slate-400 focus:border-emerald-500 focus:outline-none font-medium transition"
                   />
                   <button
                     onClick={startScanner}
-                    className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-orange-500 transition"
+                    className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-emerald-400 transition"
                   >
                     <Camera className="w-5 h-5" />
                   </button>
@@ -633,7 +633,7 @@ export default function Quality() {
                   placeholder="Type to filter..."
                   value={filterText}
                   onChange={e => setFilterText(e.target.value)}
-                  className="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs focus:ring-2 focus:ring-orange-500 focus:outline-none transition"
+                  className="w-full bg-[#121212] border border-[#3a3a3a] rounded-xl px-3 py-2 text-xs text-white placeholder-slate-400 focus:border-emerald-500 focus:outline-none font-medium transition"
                 />
               </div>
             </div>
@@ -647,17 +647,17 @@ export default function Quality() {
                 item.item_code.toLowerCase().includes(filterText.toLowerCase()) ||
                 item.grn_number.toLowerCase().includes(filterText.toLowerCase())
               ).length === 0 ? (
-                <div className="bg-white rounded-2xl border border-slate-200 p-10 text-center text-slate-400 text-xs flex flex-col items-center justify-center h-56 shadow-sm">
-                  <CheckCircle2 className="w-12 h-12 text-green-500 mb-3" />
-                  <p className="font-bold text-slate-800 text-sm">Queue Clear!</p>
+                <div className="bg-[#1e1e1e] rounded-xl border border-[#2a2a2a] p-10 text-center text-slate-400 text-xs flex flex-col items-center justify-center h-56 shadow-lg">
+                  <CheckCircle2 className="w-12 h-12 text-emerald-400 mb-3" />
+                  <p className="font-extrabold text-white text-sm">Queue Clear!</p>
                   <p className="text-slate-400 text-xs mt-1">No labels pending QC inspection.</p>
                 </div>
               ) : (
-                <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                <div className="bg-[#1e1e1e] rounded-xl border border-[#2a2a2a] shadow-lg overflow-hidden">
                   <div className="overflow-x-auto">
                     <table className="w-full text-left border-collapse text-xs">
                       <thead>
-                        <tr className="bg-slate-50 text-slate-500 font-bold border-b border-slate-200">
+                        <tr className="bg-[#252525] text-slate-200 font-black border-b border-[#333]">
                           <th className="px-6 py-3.5">GRN NO</th>
                           <th className="px-6 py-3.5">DATE</th>
                           <th className="px-6 py-3.5">SUPPLIER</th>
@@ -667,23 +667,23 @@ export default function Quality() {
                           <th className="px-6 py-3.5 text-center">ACTION</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-slate-100 font-medium text-slate-700">
+                      <tbody className="divide-y divide-[#2a2a2a] font-medium text-slate-200">
                         {queue.inward.filter(item => 
                           item.item_name.toLowerCase().includes(filterText.toLowerCase()) ||
                           item.item_code.toLowerCase().includes(filterText.toLowerCase()) ||
                           item.grn_number.toLowerCase().includes(filterText.toLowerCase())
                         ).map((item, idx) => (
-                          <tr key={idx} className="hover:bg-slate-50 transition">
-                            <td className="px-6 py-3.5 text-orange-500 font-bold">{item.grn_number}</td>
-                            <td className="px-6 py-3.5">{new Date(item.grn_date).toLocaleDateString()}</td>
-                            <td className="px-6 py-3.5">{item.supplier_name}</td>
-                            <td className="px-6 py-3.5">{item.item_code}</td>
-                            <td className="px-6 py-3.5 font-bold text-slate-800">{item.item_name}</td>
-                            <td className="px-6 py-3.5 font-bold">{item.quantity} {item.unit}</td>
+                          <tr key={idx} className="hover:bg-[#252525] border-b border-[#2a2a2a] transition">
+                            <td className="px-6 py-3.5 text-emerald-400 font-extrabold">{item.grn_number}</td>
+                            <td className="px-6 py-3.5 text-slate-300 font-mono">{new Date(item.grn_date).toLocaleDateString()}</td>
+                            <td className="px-6 py-3.5 text-white font-extrabold">{item.supplier_name}</td>
+                            <td className="px-6 py-3.5 text-slate-300 font-mono">{item.item_code}</td>
+                            <td className="px-6 py-3.5 font-extrabold text-white">{item.item_name}</td>
+                            <td className="px-6 py-3.5 font-black text-white">{item.quantity} {item.unit}</td>
                             <td className="px-6 py-3.5 text-center">
                               <button
                                 onClick={() => startInspection(item, 'Inward')}
-                                className="bg-orange-500 hover:bg-orange-600 text-white font-semibold text-[10px] px-3 py-1 rounded transition shadow-sm"
+                                className="bg-[#10b981] hover:bg-[#059669] text-white font-black text-xs px-3.5 py-1.5 rounded-lg transition shadow-md"
                               >
                                 Inspect
                               </button>

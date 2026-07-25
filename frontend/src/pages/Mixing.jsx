@@ -875,11 +875,11 @@ export default function Mixing() {
   };
 
   return (
-    <div className="space-y-6 text-slate-700">
+    <div className="bg-[#121212] text-slate-200 min-h-screen p-6 font-sans space-y-6">
       {/* ─── TITLE SECTION ────────────────────────────────────────── */}
-      <div>
-        <h1 className="text-2xl font-black tracking-tight text-slate-900">Compounding & Mixing - Module 5</h1>
-        <p className="text-slate-500 text-xs mt-1">Track Stage 1 Master compounding, Stage 2 final mixing, Mooney Viscosity, and Rheometer tests</p>
+      <div className="border-b border-[#2a2a2a] pb-4">
+        <h1 className="text-lg font-black text-white">Compounding & Mixing - Module 5</h1>
+        <p className="text-xs text-slate-400 font-medium">Track Stage 1 Master compounding, Stage 2 final mixing, Mooney Viscosity, and Rheometer tests</p>
       </div>
 
       {/* ─── TAB NAVIGATION ────────────────────────────────────────── */}
@@ -910,7 +910,7 @@ export default function Mixing() {
         <>
           {viewState === 'list' && (
             <div className="space-y-4">
-              <div className="flex justify-between items-center bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">
+              <div className="flex justify-between items-center bg-[#1e1e1e] border border-[#2a2a2a] rounded-xl p-4 shadow-md flex-wrap gap-2">
                 <div className="relative w-72">
                   <span className="absolute inset-y-0 left-0 pl-3 flex items-center">
                     <Search className="w-4 h-4 text-slate-400" />
@@ -918,7 +918,7 @@ export default function Mixing() {
                   <input
                     type="text"
                     placeholder="Search recipes..."
-                    className="w-full pl-9 pr-3 py-1.5 bg-slate-50 border border-slate-300 rounded-xl text-xs focus:ring-1 focus:ring-orange-500 focus:outline-none"
+                    className="w-full pl-9 pr-3 py-2 bg-[#121212] border border-[#3a3a3a] rounded-xl text-xs text-white placeholder-slate-400 focus:border-emerald-500 focus:outline-none font-medium"
                   />
                 </div>
                 <button
@@ -932,45 +932,45 @@ export default function Mixing() {
                     });
                     setViewState('new');
                   }}
-                  className="px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow-sm"
+                  className="px-4 py-2 bg-[#10b981] hover:bg-[#059669] text-white rounded-xl text-xs font-black transition flex items-center gap-1.5 shadow-md"
                 >
                   <Plus className="w-4 h-4" />
                   New Recipe
                 </button>
               </div>
 
-              <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+              <div className="bg-[#1e1e1e] rounded-xl border border-[#2a2a2a] shadow-lg overflow-hidden">
                 <table className="w-full text-left border-collapse text-xs">
                   <thead>
-                    <tr className="bg-slate-50 border-b border-slate-200 text-slate-500 font-bold">
-                      <th className="px-6 py-4">RECIPE CODE</th>
-                      <th className="px-6 py-4">RECIPE NAME</th>
-                      <th className="px-6 py-4">RUBBER TYPE</th>
-                      <th className="px-6 py-4 text-right">BATCH SIZE</th>
-                      <th className="px-6 py-4">VERSION</th>
-                      <th className="px-6 py-4">STATUS</th>
-                      <th className="px-6 py-4 text-center">ACTIONS</th>
+                    <tr className="bg-[#252525] border-b border-[#333] text-slate-200 font-black uppercase tracking-wider text-xs">
+                      <th className="px-6 py-3.5">RECIPE CODE</th>
+                      <th className="px-6 py-3.5">RECIPE NAME</th>
+                      <th className="px-6 py-3.5">RUBBER TYPE</th>
+                      <th className="px-6 py-3.5 text-right">BATCH SIZE</th>
+                      <th className="px-6 py-3.5">VERSION</th>
+                      <th className="px-6 py-3.5">STATUS</th>
+                      <th className="px-6 py-3.5 text-center">ACTIONS</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-100 font-medium text-slate-700">
+                  <tbody className="divide-y divide-[#2a2a2a] font-medium text-slate-200">
                     {recipes.map(r => (
-                      <tr key={r.recipe_id} className="hover:bg-slate-50/50 cursor-pointer" onClick={() => viewRecipeDetail(r)}>
-                        <td className="px-6 py-4 font-bold text-orange-500">{r.recipe_code}</td>
-                        <td className="px-6 py-4 font-bold text-slate-900">{r.recipe_name}</td>
-                        <td className="px-6 py-4 font-semibold text-slate-505">{r.rubber_type}</td>
-                        <td className="px-6 py-4 text-right font-bold">{parseFloat(r.batch_size).toFixed(2)} {r.unit}</td>
-                        <td className="px-6 py-4 font-bold text-slate-400">{r.version}</td>
-                        <td className="px-6 py-4">
-                          <span className={`px-2.5 py-0.5 rounded text-[9px] font-bold ${
-                            r.status === 'Active' ? 'bg-green-105 text-green-700' : 'bg-slate-100 text-slate-500'
+                      <tr key={r.recipe_id} className="hover:bg-[#252525] border-b border-[#2a2a2a] transition cursor-pointer" onClick={() => viewRecipeDetail(r)}>
+                        <td className="px-6 py-3.5 font-extrabold text-emerald-400">{r.recipe_code}</td>
+                        <td className="px-6 py-3.5 font-extrabold text-white">{r.recipe_name}</td>
+                        <td className="px-6 py-3.5 font-mono text-slate-300">{r.rubber_type}</td>
+                        <td className="px-6 py-3.5 text-right font-black text-white">{parseFloat(r.batch_size).toFixed(2)} {r.unit}</td>
+                        <td className="px-6 py-3.5 font-mono text-slate-300">{r.version}</td>
+                        <td className="px-6 py-3.5">
+                          <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase ${
+                            r.status === 'Active' ? 'bg-emerald-500/10 text-emerald-300 border border-emerald-500/30' : 'bg-slate-500/10 text-slate-400'
                           }`}>
                             {r.status}
                           </span>
                         </td>
-                        <td className="px-6 py-4 text-center flex items-center justify-center gap-1.5">
+                        <td className="px-6 py-3.5 text-center flex items-center justify-center gap-1.5">
                           <button
                             onClick={() => viewRecipeDetail(r)}
-                            className="px-2.5 py-1 bg-slate-100 hover:bg-slate-250 text-slate-750 border border-slate-200 rounded text-[11px] font-bold transition shadow-sm"
+                            className="px-3 py-1.5 bg-[#10b981] hover:bg-[#059669] text-white rounded-lg text-xs font-bold transition shadow-md"
                           >
                             View Specs
                           </button>
