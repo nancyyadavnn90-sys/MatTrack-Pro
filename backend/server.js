@@ -79,14 +79,29 @@ io.on('connection', (socket) => {
   });
 });
 
-const PORT = process.env.PORT || 5000;
-server.listen(PORT, () => {
-  console.log(`✅ Server running on http://localhost:${PORT}`);
-  try {
-    const { initializeAlertsJob } = require('./controllers/wipController');
-    initializeAlertsJob();
-    console.log('⏰ WIP Auto-Alerts background job initialized');
-  } catch (e) {
-    console.error('Failed to initialize auto-alerts job:', e);
+let PORT = process.env.PORT || 5000;
+
+function startServer(portToUse) {
+  server.listen(portToUse, () => {
+    console.log(`✅ Server running on http://localhost:${portToUse}`);
+    try {
+      const { initializeAlertsJob } = require('./controllers/wipController');
+      initializeAlertsJob();
+      console.log('⏰ WIP Auto-Alerts background job initialized');
+    } catch (e) {
+      console.error('Failed to initialize auto-alerts job:', e);
+    }
+  });
+}
+
+server.on('error', (err) => {
+  if (err.code === 'EADDRINUSE') {
+    console.warn(`⚠️ Port ${PORT} is in use (often used by macOS AirPlay). Retrying on port ${Number(PORT) + 1}...`);
+    PORT = Number(PORT) + 1;
+    setTimeout(() => startServer(PORT), 1000);
+  } else {
+    console.error('Server error:', err);
   }
 });
+
+startServer(PORT);
