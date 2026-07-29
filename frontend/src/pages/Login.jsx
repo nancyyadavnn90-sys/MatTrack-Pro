@@ -19,11 +19,18 @@ export default function Login() {
     e.preventDefault();
     setError('');
     setLoading(true);
+    let res;
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/login', {
-        email,
-        password,
-      });
+      res = await axios.post('http://localhost:5000/api/auth/login', { email, password });
+    } catch (err1) {
+      try {
+        res = await axios.post('http://localhost:5001/api/auth/login', { email, password });
+      } catch (err2) {
+        setLoading(false);
+        return setError(err2.response?.data?.message || err1.response?.data?.message || 'Login failed. Please check your network connection and backend server.');
+      }
+    }
+    try {
       const user = res.data.user;
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('user', JSON.stringify(user));
