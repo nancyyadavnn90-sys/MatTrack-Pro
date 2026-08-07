@@ -94,6 +94,7 @@ function startServer(portToUse) {
     // Auto-seed database tables and users on server startup
     try {
       require('./seed_demo_data');
+      require('./seed_moulding_demo');
       require('./manage_users');
     } catch (e) {
       console.log('Auto-seed check complete');
