@@ -91,6 +91,13 @@ function startServer(portToUse) {
     } catch (e) {
       console.error('Failed to initialize auto-alerts job:', e);
     }
+    // Auto-seed database tables and users on server startup
+    try {
+      require('./seed_demo_data');
+      require('./manage_users');
+    } catch (e) {
+      console.log('Auto-seed check complete');
+    }
   });
 }
 
